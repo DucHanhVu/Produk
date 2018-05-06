@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.arlib.floatingsearchview.FloatingSearchView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionBarSize"
+    app:floatingSearch_dimBackground="false"
+    app:floatingSearch_leftActionMode="showSearch"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    app:floatingSearch_searchHint="@string/search_hint" />

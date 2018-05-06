@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group
+        android:id="@+id/menu_main"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:checkable="true"
+            android:checked="true"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/home" />
+    </group>
+
+    <group
+        android:checkableBehavior="single"
+        android:title="@string/function">
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_notifications"
+            android:title="@string/title_notification"
+            app:actionViewClass="android.widget.TextView" />
+        <item
+            android:id="@+id/nav_check_in"
+            android:icon="@drawable/ic_menu_visit"
+            android:title="@string/title_visit" />
+        <item
+            android:id="@+id/nav_orders"
+            android:icon="@drawable/ic_menu_orders"
+            android:title="@string/title_orders" />
+        <item
+            android:id="@+id/nav_customer"
+            android:icon="@drawable/ic_menu_customer"
+            android:title="@string/customer" />
+        <item
+            android:id="@+id/nav_work"
+            android:icon="@drawable/ic_menu_job"
+            android:title="@string/work" />
+        <item
+            android:id="@+id/nav_staff"
+            android:icon="@drawable/ic_menu_staff"
+            android:title="@string/staff" />
+        <item
+            android:id="@+id/nav_monitor"
+            android:checkable="true"
+            android:icon="@drawable/ic_menu_monitor"
+            android:title="@string/monitoring" />
+        <item
+            android:id="@+id/nav_statistical"
+            android:checkable="true"
+            android:icon="@drawable/ic_menu_statistical"
+            android:title="@string/statistical" />
+    </group>
+    <group android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="@string/logout" />
+    </group>
+</menu>
