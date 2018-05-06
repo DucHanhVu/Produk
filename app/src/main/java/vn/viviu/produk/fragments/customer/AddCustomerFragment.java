@@ -72,6 +72,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     ImageView addAvatar;
 
     private AddCustomerPre addCustomerPre;
+    private String pathImg = null;
 
     private ArrayAdapter<String> spinAdapter;
     private static final String TAG = "Add_Customer_Fragment";
@@ -104,6 +105,10 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         hideFab();
         showBackButton(true);
         addAvatar.setOnClickListener(this);
+        if (pathImg != null) {
+            Bitmap bmp = BitmapFactory.decodeFile(pathImg);
+            addAvatar.setImageBitmap(bmp);
+        }
     }
 
     @Override
@@ -198,10 +203,8 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == Key.ADD_CUSTOMER_CODE) {
-                String path = data.getStringExtra("pathImage");
-                Log.d(TAG, path);
-                Bitmap bmp = BitmapFactory.decodeFile(path);
-//                addAvatar.setImageBitmap(bmp);
+                pathImg = data.getStringExtra("pathImage");
+                Log.d(TAG, pathImg);
             }
         }
     }

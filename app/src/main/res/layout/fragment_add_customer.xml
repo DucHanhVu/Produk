@@ -21,10 +21,9 @@
             <ImageView
                 android:id="@+id/add_avatar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/nav_header_height"
+                android:layout_height="@dimen/img_height"
                 android:layout_gravity="center"
                 android:contentDescription="@string/avt_customer"
-                android:scaleType="fitXY"
                 android:src="@drawable/ic_dot_border" />
         </FrameLayout>
 
