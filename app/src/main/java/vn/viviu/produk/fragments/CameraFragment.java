@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -56,6 +57,9 @@ import java.util.concurrent.TimeUnit;
 
 import vn.viviu.produk.R;
 import vn.viviu.produk.utils.AutoFitTextureView;
+import vn.viviu.produk.utils.Key;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,7 +84,7 @@ public class CameraFragment extends BaseFragment
     /**
      * Tag for the {@link Log}.
      */
-    private static final String TAG = "Camera2BasicFragment";
+    private static final String TAG = "CameraFragment";
 
     /**
      * Camera state: Showing camera preview.
@@ -995,6 +999,10 @@ public class CameraFragment extends BaseFragment
 
     @Override
     public void onBackPressed() {
-
+        Intent intent = new Intent(getContext(), CameraFragment.class);
+        intent.putExtra("pathImage", mFile.toString());
+        Log.d(TAG, mFile.toString());
+        getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+        getFragmentManager().popBackStack();
     }
 }

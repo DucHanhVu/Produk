@@ -18,4 +18,5 @@ public class Key {
     public static final String KEY_ORDER = "Orders";
     public static final String KEY_ADD_CUSTOMER = "Add Customer";
     public static final String KEY_CAMERA = "Camera";
+    public static final int ADD_CUSTOMER_CODE = 100;
 }

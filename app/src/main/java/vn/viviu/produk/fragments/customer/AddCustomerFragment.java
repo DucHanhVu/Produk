@@ -1,6 +1,9 @@
 package vn.viviu.produk.fragments.customer;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +33,8 @@ import vn.viviu.produk.models.Area;
 import vn.viviu.produk.models.CustomerGroup;
 import vn.viviu.produk.models.Stream;
 import vn.viviu.produk.utils.Key;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -178,11 +183,26 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     public void onClick(View v) {
         int vId = v.getId();
         if (vId == R.id.add_avatar) {
+            CameraFragment cameraFragment = new CameraFragment();
+            cameraFragment.setTargetFragment(AddCustomerFragment.this, Key.ADD_CUSTOMER_CODE);
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container_main, new CameraFragment(), Key.KEY_CAMERA)
+                    .replace(R.id.container_main, cameraFragment, Key.KEY_CAMERA)
                     .addToBackStack(Key.KEY_CAMERA)
                     .commit();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Key.ADD_CUSTOMER_CODE) {
+                String path = data.getStringExtra("pathImage");
+                Log.d(TAG, path);
+                Bitmap bmp = BitmapFactory.decodeFile(path);
+//                addAvatar.setImageBitmap(bmp);
+            }
         }
     }
 
