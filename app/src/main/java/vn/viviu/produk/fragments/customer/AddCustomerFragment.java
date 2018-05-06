@@ -106,6 +106,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         showBackButton(true);
         addAvatar.setOnClickListener(this);
         if (pathImg != null) {
+
             Bitmap bmp = BitmapFactory.decodeFile(pathImg);
             addAvatar.setImageBitmap(bmp);
         }
