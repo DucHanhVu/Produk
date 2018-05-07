@@ -142,4 +142,63 @@ public class Customer implements Serializable {
         return TrangThai;
     }
 
+    public void setMaKH(String maKH) {
+        MaKH = maKH;
+    }
+
+    public void setTenKH(String tenKH) {
+        TenKH = tenKH;
+    }
+
+    public void setMaLoaiKH(String maLoaiKH) {
+        MaLoaiKH = maLoaiKH;
+    }
+
+    public void setMaKV(String maKV) {
+        MaKV = maKV;
+    }
+
+    public void setMaTuyen(String maTuyen) {
+        MaTuyen = maTuyen;
+    }
+
+    public void setDiaChi(String diaChi) {
+        DiaChi = diaChi;
+    }
+
+    public void setNguoiLienHe(String nguoiLienHe) {
+        NguoiLienHe = nguoiLienHe;
+    }
+
+    public void setChucVu(String chucVu) {
+        ChucVu = chucVu;
+    }
+
+    public void setSDT(Integer SDT) {
+        this.SDT = SDT;
+    }
+
+    public void setEmail(String email) {
+        Email = email;
+    }
+
+    public void setWebsite(String website) {
+        Website = website;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        HinhAnh = hinhAnh;
+    }
+
+    public void setHanMucCN(Integer hanMucCN) {
+        HanMucCN = hanMucCN;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        GhiChu = ghiChu;
+    }
+
+    public void setTrangThai(boolean trangThai) {
+        TrangThai = trangThai;
+    }
 }

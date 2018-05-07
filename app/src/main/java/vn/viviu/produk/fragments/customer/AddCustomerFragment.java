@@ -2,8 +2,6 @@ package vn.viviu.produk.fragments.customer;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,10 +14,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ import vn.viviu.produk.R;
 import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.fragments.CameraFragment;
 import vn.viviu.produk.models.Area;
+import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.CustomerGroup;
 import vn.viviu.produk.models.Stream;
 import vn.viviu.produk.utils.Key;
@@ -71,10 +74,18 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     @BindView(R.id.add_avatar)
     ImageView addAvatar;
 
-    private AddCustomerPre addCustomerPre;
-    private String pathImg = null;
+    private AddCustomerPre addCustomerPreListener;
+    private Customer customer;
 
+    /**
+     * List
+     */
+    private List<Area> areas;
+    private List<CustomerGroup> groups;
+    private List<Stream> routes;
     private ArrayAdapter<String> spinAdapter;
+
+    private String pathImg;
     private static final String TAG = "Add_Customer_Fragment";
 
     public AddCustomerFragment() {
@@ -85,7 +96,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        addCustomerPre = new AddCustomerPreImpl(this);
+        addCustomerPreListener = new AddCustomerPreImpl(this);
     }
 
     @Override
@@ -93,7 +104,13 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_add_customer, container, false);
         unbinder = ButterKnife.bind(this, v);
-        addCustomerPre.getData();
+        addCustomerPreListener.getData();
+        if (getArguments() != null) {
+            customer = (Customer) getArguments().getSerializable(Key.KEY_CUSTOMER);
+        } else {
+            customer = new Customer();
+        }
+
         Log.d(TAG, "onCreateView Call");
         return v;
     }
@@ -106,9 +123,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         showBackButton(true);
         addAvatar.setOnClickListener(this);
         if (pathImg != null) {
-
-            Bitmap bmp = BitmapFactory.decodeFile(pathImg);
-            addAvatar.setImageBitmap(bmp);
+            Glide.with(getContext()).load(new File(pathImg)).into(addAvatar);
         }
     }
 
@@ -125,6 +140,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     @Override
     public void setListGroup(List<CustomerGroup> groups) {
         Log.d(TAG, String.valueOf(groups.size()));
+        this.groups = groups;
         List<String> listGroup = new ArrayList<>();
         for (CustomerGroup group : groups) {
             listGroup.add(group.getTenLoaiKH());
@@ -135,12 +151,13 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
                 listGroup
         );
         spinCustomerType.setAdapter(spinAdapter);
-
+        spinCustomerType.setOnItemSelectedListener(itemSelectedListener);
     }
 
     @Override
     public void setListArea(List<Area> areaList) {
         Log.d(TAG, String.valueOf(areaList.size()));
+        this.areas = areaList;
         List<String> listArea = new ArrayList<>();
         for (Area area : areaList) {
             listArea.add(area.getTenKV());
@@ -151,11 +168,13 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
                 listArea
         );
         spinCustomerArea.setAdapter(spinAdapter);
+        spinCustomerArea.setOnItemSelectedListener(itemSelectedListener);
     }
 
     @Override
     public void setListRoute(List<Stream> routes) {
         Log.d(TAG, String.valueOf(routes.size()));
+        this.routes = routes;
         List<String> listRoute = new ArrayList<>();
         for (Stream route : routes) {
             String st = route.getTenTuyen() + " (" + route.getMoTa() + ")";
@@ -167,6 +186,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
                 listRoute
         );
         spinCustomerRoute.setAdapter(spinAdapter);
+        spinCustomerRoute.setOnItemSelectedListener(itemSelectedListener);
     }
 
     @Override
@@ -180,10 +200,54 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_save) {
-            //Code here
+            saveData();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Save Customer
+     */
+    private void saveData() {
+        //Get data
+        customer.setMaKH(edtCustomerId.getText() + "");
+        customer.setTenKH(edtCustomerName.getText() + "");
+        customer.setNguoiLienHe(edtCustomerContact.getText() + "");
+        customer.setChucVu(edtCustomerPosition.getText() + "");
+        customer.setSDT(Integer.parseInt(edtCustomerPhone.getText() + ""));
+        customer.setEmail(edtCustomerEmail.getText() + "");
+        customer.setWebsite(edtCustomerWebsite.getText() + "");
+        customer.setGhiChu(edtCustomerNote.getText() + "");
+        customer.setHanMucCN(Integer.parseInt(edtDebtLimit.getText() + ""));
+
+        addCustomerPreListener.putData(customer);
+    }
+
+    AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch (view.getId()) {
+                case R.id.spin_customer_type: {
+                    customer.setMaLoaiKH(groups.get(position).getMaLoaiKH());
+                    break;
+                }
+                case R.id.spin_customer_area: {
+                    customer.setMaKV(areas.get(position).getMaKV());
+                    break;
+                }
+                case R.id.spin_customer_route: {
+                    customer.setMaTuyen(routes.get(position).getMaTuyen());
+                    break;
+                }
+            }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     @Override
     public void onClick(View v) {
