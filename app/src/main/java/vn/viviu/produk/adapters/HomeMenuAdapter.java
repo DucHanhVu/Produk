@@ -27,7 +27,7 @@ public class HomeMenuAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return images.length;
+        return 6;
     }
 
     @Override

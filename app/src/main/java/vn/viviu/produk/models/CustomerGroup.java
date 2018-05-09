@@ -12,6 +12,11 @@ public class CustomerGroup implements Serializable {
 
     private String TenLoaiKH;
 
+    public CustomerGroup(String maLoaiKH, String tenLoaiKH) {
+        MaLoaiKH = maLoaiKH;
+        TenLoaiKH = tenLoaiKH;
+    }
+
     public CustomerGroup() {
     }
 

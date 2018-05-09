@@ -3,8 +3,12 @@ package vn.viviu.produk.adapters;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -70,7 +74,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         private CircleImageView avatar;
         private TextView customerName;
         private TextView tvContact;
-        private TextView tvDistance;
         private TextView tvAddress;
         private TextView tvPhone;
         private Button btnOrder;
@@ -83,7 +86,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             avatar = itemView.findViewById(R.id.avatar_customer);
             customerName = itemView.findViewById(R.id.title_customer_name);
             tvContact = itemView.findViewById(R.id.tv_contact);
-            tvDistance = itemView.findViewById(R.id.tv_distance);
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvPhone = itemView.findViewById(R.id.tv_phone);
             btnOrder = itemView.findViewById(R.id.order_customer_btn);
@@ -111,7 +113,19 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         }
 
         private void showPopupMenu() {
-
+            PopupMenu popupMenu = new PopupMenu(context, btnMore);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_customer, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_edit:
+                        listener.onDataPassed(getAdapterPosition(), 3);
+                        break;
+                    case R.id.action_delete:
+                        listener.onDataPassed(getAdapterPosition(), 4);
+                }
+                return true;
+            });
+            popupMenu.show();
         }
     }
 }

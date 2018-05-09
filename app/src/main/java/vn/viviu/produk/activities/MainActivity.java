@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity
      * Fragment Manager
      */
     private FragmentManager fm;
+    private FragmentTransaction transaction;
 
     /**
      * Fire base
@@ -74,7 +76,11 @@ public class MainActivity extends AppCompatActivity
     /**
      * var static
      */
-    private static final String TAG = "MainActivity Tag";
+    private static final String TAG = "MainActivity";
+
+    static {
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,9 +111,9 @@ public class MainActivity extends AppCompatActivity
 
         //Fragment Manager
         if (savedInstanceState == null) {
-//        getSupportActionBar().setTitle(Key.KEY_HOME);
             fm = getSupportFragmentManager();
-            fm.beginTransaction().add(R.id.container_main, new CustomerFragment()).commit();
+            transaction = fm.beginTransaction();
+            transaction.add(R.id.container_main, new CustomerFragment()).commit();
         }
     }
 
@@ -167,31 +173,31 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_main:
-                onFragmentChanged(new HomeFragment(), Key.KEY_HOME);
+                onFragmentChanged(new HomeFragment(), Key.KEY_HOME, false);
                 break;
             case R.id.nav_notifications:
 //                onFragmentChanged(new ProductManagerFragment(), Key.KEY_PRODUCT);
                 break;
             case R.id.nav_check_in:
-                onFragmentChanged(new CheckInFragment(), Key.KEY_CHECK_IN);
+                onFragmentChanged(new CheckInFragment(), Key.KEY_CHECK_IN, false);
                 break;
             case R.id.nav_orders:
 //                onFragmentChanged(new WorkFragment(), Key.KEY_WORK);
                 break;
             case R.id.nav_customer:
-                onFragmentChanged(new CustomerFragment(), Key.KEY_CUSTOMER);
+                onFragmentChanged(new CustomerFragment(), Key.KEY_CUSTOMER, false);
                 break;
             case R.id.nav_work:
-                onFragmentChanged(new WorkFragment(), Key.KEY_WORK);
+                onFragmentChanged(new WorkFragment(), Key.KEY_WORK, false);
                 break;
             case R.id.nav_staff:
-                onFragmentChanged(new StaffFragment(), Key.KEY_STAFF);
+                onFragmentChanged(new StaffFragment(), Key.KEY_STAFF, false);
                 break;
             case R.id.nav_monitor:
-                onFragmentChanged(new MonitoringFragment(), Key.KEY_MONITOR);
+                onFragmentChanged(new MonitoringFragment(), Key.KEY_MONITOR, false);
                 break;
             case R.id.nav_statistical:
-                onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC);
+                onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC, false);
                 break;
             case R.id.nav_logout: {
                 mAuth.signOut();
@@ -205,13 +211,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentChanged(Fragment fragment, String tag) {
-        fm.beginTransaction().replace(R.id.container_main, fragment, tag).commit();
-//        toolbar.setTitle(tag);
+    public void onFragmentChanged(Fragment fragment, String tag, boolean backStack) {
+        transaction = fm.beginTransaction();
+        transaction.replace(R.id.container_main, fragment, tag);
+        if (backStack) {
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
     }
 
     @Override
-    public void onItemSelected(int index) {
+    public void onItemChanged(int index) {
         nav.setCheckedItem(index);
     }
 

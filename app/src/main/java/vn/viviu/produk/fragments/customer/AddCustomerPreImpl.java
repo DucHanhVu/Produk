@@ -8,7 +8,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.viviu.produk.models.Area;
 import vn.viviu.produk.models.Customer;
@@ -42,7 +44,6 @@ public class AddCustomerPreImpl implements AddCustomerPre {
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     groups.add(post.getValue(CustomerGroup.class));
                 }
-
                 addCustomerView.setListGroup(groups);
             }
 
@@ -58,7 +59,6 @@ public class AddCustomerPreImpl implements AddCustomerPre {
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     areas.add(post.getValue(Area.class));
                 }
-
                 addCustomerView.setListArea(areas);
             }
 
@@ -74,7 +74,6 @@ public class AddCustomerPreImpl implements AddCustomerPre {
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     routes.add(post.getValue(Stream.class));
                 }
-
                 addCustomerView.setListRoute(routes);
             }
 
@@ -88,6 +87,10 @@ public class AddCustomerPreImpl implements AddCustomerPre {
 
     @Override
     public void putData(Customer customer) {
-
+        Map<String, Object> postData = customer.toMap();
+        Map<String, Object> child = new HashMap<>();
+        child.put(customer.getMaKH(), postData);
+        mDatabase.getReference("Customer").updateChildren(child);
+        addCustomerView.onSuccess();
     }
 }

@@ -43,8 +43,9 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
      */
     private CustomerAdapter adapter;
     private CustomerPresenter customerPre;
+    private List<Customer> customers;
 
-    private OnFragmentChangedListener fragmentChangedListener;
+    private OnFragmentChangedListener listener;
 
     public CustomerFragment() {
         // Required empty public constructor
@@ -54,7 +55,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentChangedListener)
-            fragmentChangedListener = (OnFragmentChangedListener) context;
+            listener = (OnFragmentChangedListener) context;
         else
             throw new RuntimeException(context.toString() + "must implement OnFragmentChangedListener");
     }
@@ -86,6 +87,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
     @Override
     public void setData(List<Customer> customers) {
         Log.d("CustomerSize", String.valueOf(customers.size()));
+        this.customers = customers;
         adapter = new CustomerAdapter(getContext(), customers, dataListener);
         rvCustomer.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvCustomer.setAdapter(adapter);
@@ -94,20 +96,25 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
     /**
      * Event Listener
      */
-    OnPassDataListener dataListener = (position, id) -> {
-        Log.d("Position", String.valueOf(position));
-        Log.d("id", String.valueOf(id));
+    OnPassDataListener dataListener = (position, type) -> {
+        Fragment newFragment = null;
+        switch (type) {
+            case 3: {
+                newFragment = new AddCustomerFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Key.KEY_CUSTOMER, customers.get(position));
+                newFragment.setArguments(bundle);
+                break;
+            }
+        }
+        listener.onFragmentChanged(newFragment, null, true);
     };
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.fab) {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container_main, new AddCustomerFragment(), Key.KEY_ADD_CUSTOMER)
-                    .addToBackStack(Key.KEY_ADD_CUSTOMER)
-                    .commit();
+            listener.onFragmentChanged(new AddCustomerFragment(), Key.KEY_ADD_CUSTOMER, true);
         }
     }
 

@@ -16,7 +16,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_horizontal_margin">
 
             <ImageView
                 android:id="@+id/add_avatar"
@@ -28,6 +29,7 @@
         </FrameLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/customer_id">
@@ -35,10 +37,12 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_customer_id"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/customer_name">
@@ -46,10 +50,25 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_customer_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/address">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/edt_customer_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/customer_type" />
@@ -60,6 +79,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_area" />
@@ -70,6 +90,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_route" />
@@ -80,6 +101,7 @@
             android:layout_height="wrap_content" />
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/contact">
@@ -87,10 +109,12 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_customer_contact"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title_position">
@@ -98,10 +122,12 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_customer_position"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone">
@@ -114,6 +140,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email">
@@ -126,6 +153,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/website">
@@ -134,10 +162,11 @@
                 android:id="@+id/edt_customer_website"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/note">
@@ -145,10 +174,12 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_customer_note"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
+            style="@style/EditTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/debt_limit">
@@ -156,7 +187,8 @@
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/edt_debt_limit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 </ScrollView>

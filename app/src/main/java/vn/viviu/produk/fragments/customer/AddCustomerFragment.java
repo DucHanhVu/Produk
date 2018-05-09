@@ -18,11 +18,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -50,6 +55,8 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     TextInputEditText edtCustomerId;
     @BindView(R.id.edt_customer_name)
     TextInputEditText edtCustomerName;
+    @BindView(R.id.edt_customer_address)
+    TextInputEditText edtCustomerAddress;
     @BindView(R.id.spin_customer_type)
     Spinner spinCustomerType;
     @BindView(R.id.spin_customer_area)
@@ -105,12 +112,6 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         View v = inflater.inflate(R.layout.fragment_add_customer, container, false);
         unbinder = ButterKnife.bind(this, v);
         addCustomerPreListener.getData();
-        if (getArguments() != null) {
-            customer = (Customer) getArguments().getSerializable(Key.KEY_CUSTOMER);
-        } else {
-            customer = new Customer();
-        }
-
         Log.d(TAG, "onCreateView Call");
         return v;
     }
@@ -119,6 +120,12 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
+        if (getArguments() != null) {
+            customer = (Customer) getArguments().getSerializable(Key.KEY_CUSTOMER);
+            showData();
+        } else {
+            customer = new Customer();
+        }
         hideFab();
         showBackButton(true);
         addAvatar.setOnClickListener(this);
@@ -190,6 +197,12 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     }
 
     @Override
+    public void onSuccess() {
+        Toast.makeText(getContext(), "Save Complete!!!", Toast.LENGTH_SHORT).show();
+        onBackPressed();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu_save, menu);
@@ -206,12 +219,39 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     }
 
     /**
+     * show data
+     */
+    private void showData() {
+        edtCustomerId.setText(customer.getMaKH());
+        edtCustomerName.setText(customer.getTenKH());
+        edtCustomerAddress.setText(customer.getDiaChi());
+        edtCustomerContact.setText(customer.getNguoiLienHe());
+        edtCustomerPosition.setText(customer.getChucVu());
+        edtCustomerPhone.setText("0" + customer.getSDT());
+        edtCustomerEmail.setText(customer.getEmail());
+        edtCustomerWebsite.setText(customer.getWebsite());
+        edtCustomerNote.setText(customer.getGhiChu());
+        edtDebtLimit.setText(customer.getHanMucCN() + "");
+    }
+
+    private int selectItem(String value, int type) {
+        int position = 0;
+        if (type == 0) {
+            Comparator<CustomerGroup> c = (o1, o2) -> o1.getTenLoaiKH().compareTo(o2.getTenLoaiKH());
+
+            position = Collections.binarySearch(groups, new CustomerGroup(null, value), c);
+        }
+        return position;
+    }
+
+    /**
      * Save Customer
      */
     private void saveData() {
         //Get data
         customer.setMaKH(edtCustomerId.getText() + "");
         customer.setTenKH(edtCustomerName.getText() + "");
+        customer.setDiaChi(edtCustomerAddress.getText() + "");
         customer.setNguoiLienHe(edtCustomerContact.getText() + "");
         customer.setChucVu(edtCustomerPosition.getText() + "");
         customer.setSDT(Integer.parseInt(edtCustomerPhone.getText() + ""));
@@ -219,6 +259,8 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         customer.setWebsite(edtCustomerWebsite.getText() + "");
         customer.setGhiChu(edtCustomerNote.getText() + "");
         customer.setHanMucCN(Integer.parseInt(edtDebtLimit.getText() + ""));
+        customer.setHinhAnh(edtCustomerId.getText() + ".jpg");
+        customer.setTrangThai(true);
 
         addCustomerPreListener.putData(customer);
     }

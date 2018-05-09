@@ -12,4 +12,6 @@ public interface AddCustomerView {
     void setListArea(List<Area> areaList);
 
     void setListRoute(List<Stream> routes);
+
+    void onSuccess();
 }

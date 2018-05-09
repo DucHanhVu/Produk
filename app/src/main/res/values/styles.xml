@@ -21,4 +21,9 @@
         <item name="android:background">@drawable/button_selector</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="EditTextStyle">
+        <item name="android:paddingTop">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
+    </style>
 </resources>
