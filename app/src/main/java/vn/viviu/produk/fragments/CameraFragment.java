@@ -420,7 +420,8 @@ public class CameraFragment extends BaseFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+        String path = getArguments().getString("ImageFile");
+        mFile = new File(getActivity().getExternalFilesDir(null), path);
     }
 
     @Override

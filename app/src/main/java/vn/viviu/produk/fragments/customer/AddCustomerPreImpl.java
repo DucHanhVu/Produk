@@ -25,6 +25,8 @@ public class AddCustomerPreImpl implements AddCustomerPre {
     private List<Area> areas;
     private List<Stream> routes;
 
+    private int i;
+    private int n;
     private static final String TAG = "Add Customer";
 
     public AddCustomerPreImpl(AddCustomerView addCustomerView) {
@@ -92,5 +94,41 @@ public class AddCustomerPreImpl implements AddCustomerPre {
         child.put(customer.getMaKH(), postData);
         mDatabase.getReference("Customer").updateChildren(child);
         addCustomerView.onSuccess();
+    }
+
+    @Override
+    public int itemSelectedType(String value) {
+        n = groups.size();
+        if (n > 0) {
+            for (i = 0; i < n; i++)
+                if (groups.get(i).getMaLoaiKH().equals(value)) {
+                    break;
+                }
+        }
+        return i;
+    }
+
+    @Override
+    public int itemSelectedArea(String value) {
+        n = areas.size();
+        if (n > 0) {
+            for (i = 0; i < n; i++)
+                if (areas.get(i).getMaKV().equals(value)) {
+                    break;
+                }
+        }
+        return i;
+    }
+
+    @Override
+    public int itemSelectedRoute(String value) {
+        n = routes.size();
+        if (n > 0) {
+            for (i = 0; i < n; i++)
+                if (routes.get(i).getMaTuyen().equals(value)) {
+                    break;
+                }
+        }
+        return i;
     }
 }

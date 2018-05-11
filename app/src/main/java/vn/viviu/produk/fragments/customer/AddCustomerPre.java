@@ -6,4 +6,10 @@ public interface AddCustomerPre {
     void getData();
 
     void putData(Customer customer);
+
+    int itemSelectedType(String value);
+
+    int itemSelectedArea(String value);
+
+    int itemSelectedRoute(String value);
 }

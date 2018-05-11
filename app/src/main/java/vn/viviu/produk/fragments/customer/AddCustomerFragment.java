@@ -1,6 +1,7 @@
 package vn.viviu.produk.fragments.customer;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
+import vn.viviu.produk.callbacks.OnFragmentChangedListener;
 import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.fragments.CameraFragment;
 import vn.viviu.produk.models.Area;
@@ -82,6 +84,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     ImageView addAvatar;
 
     private AddCustomerPre addCustomerPreListener;
+    private OnFragmentChangedListener fragmentChangedListener;
     private Customer customer;
 
     /**
@@ -93,10 +96,20 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     private ArrayAdapter<String> spinAdapter;
 
     private String pathImg;
+    private String imgName;
     private static final String TAG = "Add_Customer_Fragment";
 
     public AddCustomerFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentChangedListener)
+            fragmentChangedListener = (OnFragmentChangedListener) context;
+        else
+            throw new RuntimeException(context.toString() + "must implement OnFragmentChangedListener");
     }
 
     @Override
@@ -159,6 +172,11 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         );
         spinCustomerType.setAdapter(spinAdapter);
         spinCustomerType.setOnItemSelectedListener(itemSelectedListener);
+
+        if (customer.getMaLoaiKH() != null)
+            spinCustomerType.setSelection(
+                    addCustomerPreListener.itemSelectedType(customer.getMaLoaiKH())
+            );
     }
 
     @Override
@@ -176,6 +194,10 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         );
         spinCustomerArea.setAdapter(spinAdapter);
         spinCustomerArea.setOnItemSelectedListener(itemSelectedListener);
+        if (customer.getMaKV() != null)
+            spinCustomerArea.setSelection(
+                    addCustomerPreListener.itemSelectedArea(customer.getMaKV())
+            );
     }
 
     @Override
@@ -194,6 +216,10 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         );
         spinCustomerRoute.setAdapter(spinAdapter);
         spinCustomerRoute.setOnItemSelectedListener(itemSelectedListener);
+        if (customer.getMaTuyen() != null)
+            spinCustomerRoute.setSelection(
+                    addCustomerPreListener.itemSelectedRoute(customer.getMaTuyen())
+            );
     }
 
     @Override
@@ -232,16 +258,6 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         edtCustomerWebsite.setText(customer.getWebsite());
         edtCustomerNote.setText(customer.getGhiChu());
         edtDebtLimit.setText(customer.getHanMucCN() + "");
-    }
-
-    private int selectItem(String value, int type) {
-        int position = 0;
-        if (type == 0) {
-            Comparator<CustomerGroup> c = (o1, o2) -> o1.getTenLoaiKH().compareTo(o2.getTenLoaiKH());
-
-            position = Collections.binarySearch(groups, new CustomerGroup(null, value), c);
-        }
-        return position;
     }
 
     /**
@@ -297,11 +313,18 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         if (vId == R.id.add_avatar) {
             CameraFragment cameraFragment = new CameraFragment();
             cameraFragment.setTargetFragment(AddCustomerFragment.this, Key.ADD_CUSTOMER_CODE);
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container_main, cameraFragment, Key.KEY_CAMERA)
-                    .addToBackStack(Key.KEY_CAMERA)
-                    .commit();
+            //Set image name
+            if (customer.getHinhAnh() != null) {
+                imgName = customer.getHinhAnh();
+            } else if (edtCustomerId.getText() != null) {
+                imgName = edtCustomerId.getText() + ".jpg";
+            } else {
+                imgName = "pic.jpg";
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString("ImageFile", imgName);
+            cameraFragment.setArguments(bundle);
+            fragmentChangedListener.onFragmentChanged(cameraFragment, Key.KEY_CAMERA, true);
         }
     }
 
