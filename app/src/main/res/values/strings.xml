@@ -59,5 +59,7 @@
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
     <string name="address">Address</string>
     <string name="delete">Delete</string>
+    <string name="upload_img">Upload Image</string>
+    <string name="upload_complete">Upload Complete!</string>
 
 </resources>

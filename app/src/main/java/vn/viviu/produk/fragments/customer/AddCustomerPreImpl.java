@@ -1,12 +1,16 @@
 package vn.viviu.produk.fragments.customer;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +24,7 @@ import vn.viviu.produk.models.Stream;
 public class AddCustomerPreImpl implements AddCustomerPre {
     private AddCustomerView addCustomerView;
     private FirebaseDatabase mDatabase;
+    private StorageReference mStorage;
 
     private List<CustomerGroup> groups;
     private List<Area> areas;
@@ -29,9 +34,10 @@ public class AddCustomerPreImpl implements AddCustomerPre {
     private int n;
     private static final String TAG = "Add Customer";
 
-    public AddCustomerPreImpl(AddCustomerView addCustomerView) {
+    AddCustomerPreImpl(AddCustomerView addCustomerView) {
         this.addCustomerView = addCustomerView;
         mDatabase = FirebaseDatabase.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -89,12 +95,33 @@ public class AddCustomerPreImpl implements AddCustomerPre {
 
     @Override
     public void putData(Customer customer) {
-        Map<String, Object> postData = customer.toMap();
-        Map<String, Object> child = new HashMap<>();
-        child.put(customer.getMaKH(), postData);
-        mDatabase.getReference("Customer").updateChildren(child);
-        addCustomerView.onSuccess();
+        if (customer.getMaKH() == null) {
+            addCustomerView.onError(0, "Customer ID not null");
+        } else {
+            Map<String, Object> postData = customer.toMap();
+            mDatabase.getReference("Customer").updateChildren(postData);
+        }
     }
+
+    @Override
+    public void uploadImage(String pathImage, String name) {
+        if (pathImage == null) {
+            addCustomerView.onError(1, "Image is null");
+        } else {
+            Uri uri = Uri.fromFile(new File(pathImage));
+            mStorage.child("Avatar/" + name).putFile(uri)
+                    .addOnSuccessListener(taskSnapshot -> addCustomerView.onSuccess())
+                    .addOnFailureListener(e ->
+                            addCustomerView.onFailed("Failed" + e.getMessage())
+                    )
+                    .addOnProgressListener(taskSnapshot -> {
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()
+                                / taskSnapshot.getTotalByteCount());
+                        addCustomerView.onProgress((int) progress);
+                    });
+        }
+    }
+
 
     @Override
     public int itemSelectedType(String value) {

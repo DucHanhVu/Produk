@@ -5,12 +5,13 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ViviU on 11/5/2017.
  */
 @IgnoreExtraProperties
-public class Customer implements Serializable {
+public class Customer implements Serializable{
     private String MaKH;
     private String TenKH;
     private String MaLoaiKH;
@@ -26,26 +27,6 @@ public class Customer implements Serializable {
     private Integer HanMucCN;
     private String GhiChu;
     private boolean TrangThai;
-
-    @Exclude
-    public HashMap<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("MaKH", MaKH);
-        result.put("TenKH", TenKH);
-        result.put("MaLoaiKH", MaLoaiKH);
-        result.put("MaTuyen", MaTuyen);
-        result.put("DiaChi", DiaChi);
-        result.put("NguoiLienHe", NguoiLienHe);
-        result.put("ChucVu", ChucVu);
-        result.put("SDT", SDT);
-        result.put("Email", Email);
-        result.put("Website", Website);
-        result.put("HinhAnh", HinhAnh);
-        result.put("HanMucCN", HanMucCN);
-        result.put("GhiChu", GhiChu);
-        result.put("TrangThai", TrangThai);
-        return result;
-    }
 
     public Customer() {
     }
@@ -200,5 +181,28 @@ public class Customer implements Serializable {
 
     public void setTrangThai(boolean trangThai) {
         TrangThai = trangThai;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("MaKH", MaKH);
+        result.put("TenKH", TenKH);
+        result.put("MaLoaiKH", MaLoaiKH);
+        result.put("MaTuyen", MaTuyen);
+        result.put("DiaChi", DiaChi);
+        result.put("NguoiLienHe", NguoiLienHe);
+        result.put("ChucVu", ChucVu);
+        result.put("SDT", SDT);
+        result.put("Email", Email);
+        result.put("Website", Website);
+        result.put("HinhAnh", HinhAnh);
+        result.put("HanMucCN", HanMucCN);
+        result.put("GhiChu", GhiChu);
+        result.put("TrangThai", TrangThai);
+
+        Map<String, Object> post = new HashMap<>();
+        post.put(MaKH, result);
+        return post;
     }
 }

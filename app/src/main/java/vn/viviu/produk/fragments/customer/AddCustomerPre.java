@@ -7,6 +7,8 @@ public interface AddCustomerPre {
 
     void putData(Customer customer);
 
+    void uploadImage(String pathImage, String name);
+
     int itemSelectedType(String value);
 
     int itemSelectedArea(String value);

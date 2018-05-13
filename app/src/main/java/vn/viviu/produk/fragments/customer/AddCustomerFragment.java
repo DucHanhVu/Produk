@@ -1,6 +1,7 @@
 package vn.viviu.produk.fragments.customer;
 
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,11 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,6 +81,8 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     @BindView(R.id.add_avatar)
     ImageView addAvatar;
 
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManager mNotifyManager;
     private AddCustomerPre addCustomerPreListener;
     private OnFragmentChangedListener fragmentChangedListener;
     private Customer customer;
@@ -98,6 +98,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     private String pathImg;
     private String imgName;
     private static final String TAG = "Add_Customer_Fragment";
+    private static final String channelId = "Notify_Add_Customer";
 
     public AddCustomerFragment() {
         // Required empty public constructor
@@ -133,14 +134,15 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
+        hideFab();
+        showBackButton(true);
+
         if (getArguments() != null) {
             customer = (Customer) getArguments().getSerializable(Key.KEY_CUSTOMER);
             showData();
         } else {
             customer = new Customer();
         }
-        hideFab();
-        showBackButton(true);
         addAvatar.setOnClickListener(this);
         if (pathImg != null) {
             Glide.with(getContext()).load(new File(pathImg)).into(addAvatar);
@@ -223,9 +225,33 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     }
 
     @Override
+    public void onError(int code, String message) {
+        if (code == 0) {
+            edtCustomerId.setError(message);
+            edtCustomerId.requestFocus();
+        }
+        if (code == 1) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onProgress(int progress) {
+        mBuilder.setProgress(100, progress, false);
+        mNotifyManager.notify(0, mBuilder.build());
+    }
+
+    @Override
     public void onSuccess() {
         Toast.makeText(getContext(), "Save Complete!!!", Toast.LENGTH_SHORT).show();
+        mBuilder.setContentText(getString(R.string.upload_complete)).setProgress(0, 0, false);
+        mNotifyManager.notify(0, mBuilder.build());
         onBackPressed();
+    }
+
+    @Override
+    public void onFailed(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -278,7 +304,15 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         customer.setHinhAnh(edtCustomerId.getText() + ".jpg");
         customer.setTrangThai(true);
 
+        //Create notification upload
+        mNotifyManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(getContext(), channelId);
+        mBuilder.setContentTitle(getString(R.string.upload_img));
+        mBuilder.setSmallIcon(R.drawable.ic_cloud_upload);
+        mNotifyManager.notify(0, mBuilder.build());
+
         addCustomerPreListener.putData(customer);
+        addCustomerPreListener.uploadImage(pathImg, imgName);
     }
 
     AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -331,11 +365,9 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == Key.ADD_CUSTOMER_CODE) {
-                pathImg = data.getStringExtra("pathImage");
-                Log.d(TAG, pathImg);
-            }
+        if (resultCode == RESULT_OK && requestCode == Key.ADD_CUSTOMER_CODE && data != null) {
+            pathImg = data.getStringExtra("pathImage");
+            Log.d(TAG, pathImg);
         }
     }
 

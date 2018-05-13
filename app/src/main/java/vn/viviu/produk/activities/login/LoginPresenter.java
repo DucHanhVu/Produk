@@ -44,16 +44,13 @@ public class LoginPresenter {
 
     public void onLogin(String email, String pass) {
         mAuth.signInWithEmailAndPassword(email, pass)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            onSuccess();
-                        } else {
-                            Toast.makeText(activity, "Sign in failed! Please try again.", Toast.LENGTH_SHORT).show();
-                            onPasswordError();
-                            onEmailError();
-                        }
+                .addOnCompleteListener(activity, task -> {
+                    if (task.isSuccessful()) {
+                        onSuccess();
+                    } else {
+                        Toast.makeText(activity, "Sign in failed! Please try again.", Toast.LENGTH_SHORT).show();
+                        onPasswordError();
+                        onEmailError();
                     }
                 });
     }
