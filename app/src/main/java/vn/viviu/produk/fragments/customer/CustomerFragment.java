@@ -76,6 +76,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
         showFab();
         showBackButton(false);
         fab.setOnClickListener(this);
+        search.setOnQueryChangeListener((oldQuery, newQuery) -> customerPre.onQueryChanged(newQuery));
     }
 
     @Override

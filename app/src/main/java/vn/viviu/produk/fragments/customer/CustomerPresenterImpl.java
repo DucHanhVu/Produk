@@ -13,9 +13,10 @@ import java.util.List;
 
 import vn.viviu.produk.models.Customer;
 
-public class CustomerPresenterImpl implements CustomerPresenter{
+public class CustomerPresenterImpl implements CustomerPresenter {
     private CustomerView customerView;
     private DatabaseReference mDatabase;
+    private List<Customer> customers;
 
     private static final String TAG = "Customer";
 
@@ -29,7 +30,7 @@ public class CustomerPresenterImpl implements CustomerPresenter{
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<Customer> customers = new ArrayList<>();
+                customers = new ArrayList<>();
                 for (DataSnapshot post : dataSnapshot.getChildren()) {
                     customers.add(post.getValue(Customer.class));
                 }
@@ -41,5 +42,15 @@ public class CustomerPresenterImpl implements CustomerPresenter{
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+    }
+
+    @Override
+    public void onQueryChanged(String query) {
+        List<Customer> newCustomer = new ArrayList<>();
+        for (Customer c : customers) {
+            if (c.getMaKH().contains(query) || c.getTenKH().contains(query))
+                newCustomer.add(c);
+        }
+        customerView.setData(newCustomer);
     }
 }

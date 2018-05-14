@@ -40,15 +40,6 @@
             android:icon="@drawable/ic_menu_job"
             android:title="@string/work" />
         <item
-            android:id="@+id/nav_staff"
-            android:icon="@drawable/ic_menu_staff"
-            android:title="@string/staff" />
-        <item
-            android:id="@+id/nav_monitor"
-            android:checkable="true"
-            android:icon="@drawable/ic_menu_monitor"
-            android:title="@string/monitoring" />
-        <item
             android:id="@+id/nav_statistical"
             android:checkable="true"
             android:icon="@drawable/ic_menu_statistical"

@@ -38,8 +38,6 @@ import vn.viviu.produk.callbacks.OnFragmentChangedListener;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
 import vn.viviu.produk.fragments.main.HomeFragment;
-import vn.viviu.produk.fragments.monitor.MonitoringFragment;
-import vn.viviu.produk.fragments.staff.StaffFragment;
 import vn.viviu.produk.fragments.statistical.StatisticFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
 import vn.viviu.produk.utils.Key;
@@ -189,12 +187,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_work:
                 onFragmentChanged(new WorkFragment(), Key.KEY_WORK, false);
-                break;
-            case R.id.nav_staff:
-                onFragmentChanged(new StaffFragment(), Key.KEY_STAFF, false);
-                break;
-            case R.id.nav_monitor:
-                onFragmentChanged(new MonitoringFragment(), Key.KEY_MONITOR, false);
                 break;
             case R.id.nav_statistical:
                 onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC, false);

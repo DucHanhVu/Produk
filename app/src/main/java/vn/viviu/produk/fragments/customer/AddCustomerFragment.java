@@ -237,6 +237,8 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
 
     @Override
     public void onProgress(int progress) {
+        String text = progress + "%/" + "100%";
+        mBuilder.setContentText(text);
         mBuilder.setProgress(100, progress, false);
         mNotifyManager.notify(0, mBuilder.build());
     }
@@ -275,6 +277,7 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
      */
     private void showData() {
         edtCustomerId.setText(customer.getMaKH());
+        edtCustomerId.setEnabled(false);
         edtCustomerName.setText(customer.getTenKH());
         edtCustomerAddress.setText(customer.getDiaChi());
         edtCustomerContact.setText(customer.getNguoiLienHe());
@@ -311,8 +314,10 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         mBuilder.setSmallIcon(R.drawable.ic_cloud_upload);
         mNotifyManager.notify(0, mBuilder.build());
 
-        addCustomerPreListener.putData(customer);
+        Toast.makeText(getContext(), "Saving...", Toast.LENGTH_LONG).show();
+        imgName = customer.getMaKH() + ".jpg";
         addCustomerPreListener.uploadImage(pathImg, imgName);
+        addCustomerPreListener.putData(customer);
     }
 
     AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {

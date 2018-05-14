@@ -96,10 +96,12 @@ public class AddCustomerPreImpl implements AddCustomerPre {
     @Override
     public void putData(Customer customer) {
         if (customer.getMaKH() == null) {
-            addCustomerView.onError(0, "Customer ID not null");
+            addCustomerView.onError(0, "Customer ID is null");
         } else {
             Map<String, Object> postData = customer.toMap();
-            mDatabase.getReference("Customer").updateChildren(postData);
+            mDatabase.getReference("Customer").updateChildren(postData)
+                    .addOnSuccessListener(aVoid -> addCustomerView.onSuccess())
+                    .addOnFailureListener(e -> addCustomerView.onFailed(e.getMessage()));
         }
     }
 
@@ -110,7 +112,6 @@ public class AddCustomerPreImpl implements AddCustomerPre {
         } else {
             Uri uri = Uri.fromFile(new File(pathImage));
             mStorage.child("Avatar/" + name).putFile(uri)
-                    .addOnSuccessListener(taskSnapshot -> addCustomerView.onSuccess())
                     .addOnFailureListener(e ->
                             addCustomerView.onFailed("Failed" + e.getMessage())
                     )

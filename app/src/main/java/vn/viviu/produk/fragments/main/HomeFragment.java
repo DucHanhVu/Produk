@@ -16,7 +16,6 @@ import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
 import vn.viviu.produk.fragments.order.OrdersFragment;
-import vn.viviu.produk.fragments.staff.StaffFragment;
 import vn.viviu.produk.fragments.statistical.StatisticFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
 import vn.viviu.produk.utils.Key;
@@ -28,7 +27,6 @@ public class HomeFragment extends BaseFragment {
             R.drawable.ic_menu_orders,
             R.drawable.ic_menu_customer,
             R.drawable.ic_menu_job,
-            R.drawable.ic_menu_staff,
             R.drawable.ic_menu_statistical
     };
 
@@ -37,7 +35,6 @@ public class HomeFragment extends BaseFragment {
             R.string.title_orders,
             R.string.customer,
             R.string.work,
-            R.string.staff,
             R.string.statistical
     };
 
@@ -46,7 +43,6 @@ public class HomeFragment extends BaseFragment {
             R.color.light_green,
             R.color.indigo,
             R.color.teal,
-            R.color.deep_orange,
             R.color.green_a400,
     };
 
@@ -104,11 +100,6 @@ public class HomeFragment extends BaseFragment {
                 break;
             }
             case 4: {
-                listener.onFragmentChanged(new StaffFragment(), Key.KEY_STAFF, false);
-                listener.onItemChanged(R.id.nav_staff);
-                break;
-            }
-            case 5: {
                 listener.onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC, false);
                 listener.onItemChanged(R.id.nav_statistical);
                 break;
