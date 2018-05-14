@@ -1,4 +1,4 @@
-package vn.viviu.produk.fragments.main;
+package vn.viviu.produk.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

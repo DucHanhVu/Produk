@@ -9,7 +9,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import vn.viviu.produk.models.Customer;
 
@@ -52,5 +54,14 @@ public class CustomerPresenterImpl implements CustomerPresenter {
                 newCustomer.add(c);
         }
         customerView.setData(newCustomer);
+    }
+
+    @Override
+    public void onDelete(Customer customer) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(customer.getMaKH(), null);
+        mDatabase.updateChildren(map)
+                .addOnSuccessListener(aVoid -> customerView.onSuccess("Delete Success!!!"))
+                .addOnFailureListener(e -> customerView.onFailed("Failed" + e.getMessage()));
     }
 }

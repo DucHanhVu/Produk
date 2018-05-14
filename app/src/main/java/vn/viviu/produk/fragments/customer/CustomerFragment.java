@@ -2,16 +2,19 @@ package vn.viviu.produk.fragments.customer;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 
@@ -94,21 +97,41 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
         rvCustomer.setAdapter(adapter);
     }
 
+    @Override
+    public void onSuccess(String msg) {
+        adapter.notifyDataSetChanged();
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailed(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * Event Listener
      */
     OnPassDataListener dataListener = (position, type) -> {
-        Fragment newFragment = null;
         switch (type) {
             case 3: {
-                newFragment = new AddCustomerFragment();
+                BaseFragment newFragment = new AddCustomerFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Key.KEY_CUSTOMER, customers.get(position));
                 newFragment.setArguments(bundle);
+                listener.onFragmentChanged(newFragment, null, true);
                 break;
             }
+            case 4: {
+                AlertDialog.Builder al = new AlertDialog.Builder(getContext());
+                al.setTitle("Delete Customer")
+                        .setMessage("Are you sure delete customer?")
+                        .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
+                        .setPositiveButton(R.string.ok, (dialog, which) ->
+                                customerPre.onDelete(customers.get(position)));
+                al.create().show();
+            }
         }
-        listener.onFragmentChanged(newFragment, null, true);
+
     };
 
     @Override

@@ -37,7 +37,7 @@ import vn.viviu.produk.activities.login.LoginActivity;
 import vn.viviu.produk.callbacks.OnFragmentChangedListener;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
-import vn.viviu.produk.fragments.main.HomeFragment;
+import vn.viviu.produk.fragments.HomeFragment;
 import vn.viviu.produk.fragments.statistical.StatisticFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
 import vn.viviu.produk.utils.Key;
