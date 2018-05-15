@@ -12,7 +12,7 @@
     <string name="staff">Staff</string>
     <string name="title_analytics">Analytics</string>
     <string name="monitoring">Monitoring</string>
-    <string name="statistical">Statistical</string>
+    <string name="statistical">Analytics</string>
     <string name="title_other">Other</string>
     <string name="logout">Logout</string>
     <string name="title_exit">Exit</string>
@@ -62,6 +62,6 @@
     <string name="upload_img">Upload Image</string>
     <string name="upload_complete">Upload Complete!</string>
     <string name="cancel">Cancel</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
 
 </resources>

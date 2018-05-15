@@ -12,8 +12,7 @@ public class Key {
     public static final String KEY_CUSTOMER = "Customer";
     public static final String KEY_WORK = "Work";
     public static final String KEY_STAFF = "Staff";
-    public static final String KEY_MONITOR = "Monitor";
-    public static final String KEY_STATISTIC = "Statistic";
+    public static final String KEY_STATISTIC = "Analytics";
     public static final String KEY_CHECK_IN = "Check in";
     public static final String KEY_ORDER = "Orders";
     public static final String KEY_ADD_CUSTOMER = "Add Customer";

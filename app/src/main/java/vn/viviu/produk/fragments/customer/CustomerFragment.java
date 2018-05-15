@@ -113,6 +113,15 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
      */
     OnPassDataListener dataListener = (position, type) -> {
         switch (type) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                break;
+            }
+            case 2: {
+                break;
+            }
             case 3: {
                 BaseFragment newFragment = new AddCustomerFragment();
                 Bundle bundle = new Bundle();
@@ -129,6 +138,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
                         .setPositiveButton(R.string.ok, (dialog, which) ->
                                 customerPre.onDelete(customers.get(position)));
                 al.create().show();
+                break;
             }
         }
 

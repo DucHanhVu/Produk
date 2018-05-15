@@ -32,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 
 import vn.viviu.produk.R;
 import vn.viviu.produk.callbacks.OnBackPressListener;
+import vn.viviu.produk.fragments.order.OrdersFragment;
 import vn.viviu.produk.models.User;
 import vn.viviu.produk.activities.login.LoginActivity;
 import vn.viviu.produk.callbacks.OnFragmentChangedListener;
@@ -138,7 +139,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         Fragment fragment = fm.findFragmentById(R.id.container_main);
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (fragment instanceof OnBackPressListener) {
@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        fm.popBackStack();
         switch (id) {
             case R.id.nav_main:
                 onFragmentChanged(new HomeFragment(), Key.KEY_HOME, false);
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity
                 onFragmentChanged(new CheckInFragment(), Key.KEY_CHECK_IN, false);
                 break;
             case R.id.nav_orders:
-//                onFragmentChanged(new WorkFragment(), Key.KEY_WORK);
+                onFragmentChanged(new OrdersFragment(), Key.KEY_ORDER, false);
                 break;
             case R.id.nav_customer:
                 onFragmentChanged(new CustomerFragment(), Key.KEY_CUSTOMER, false);

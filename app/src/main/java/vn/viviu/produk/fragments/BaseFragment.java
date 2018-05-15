@@ -35,14 +35,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         toggle = ((MainActivity) getActivity()).getToggle();
     }
 
-    /**
-     * Simplify fragment replacing in child fragments
-     */
-    protected void replaceFragment(@NonNull Fragment fragment) {
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.container_main, fragment).commit();
-    }
-
     // hide FAB button
     protected void hideFab() {
         fab.hide();
