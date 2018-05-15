@@ -10,7 +10,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="@dimen/space_padding">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/avatar_customer"
@@ -74,12 +74,13 @@
 
         <Button
             android:id="@+id/order_customer_btn"
-            android:layout_width="92dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bkg_green"
             android:drawableStart="@drawable/ic_order_green"
+            android:padding="4dp"
             android:text="@string/title_orders"
             android:textAllCaps="false"
             android:textColor="@color/green_a400"
@@ -88,13 +89,14 @@
 
         <Button
             android:id="@+id/report_customer_btn"
-            android:layout_width="92dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bkg_orange"
             android:drawableStart="@drawable/ic_report_orange"
+            android:padding="4dp"
             android:text="@string/report"
             android:textAllCaps="false"
             android:textColor="@color/deep_orange"
@@ -104,12 +106,13 @@
 
         <Button
             android:id="@+id/checkin_customer_btn"
-            android:layout_width="92dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/bkg_blue"
             android:drawableStart="@drawable/ic_menu_visit_blue"
+            android:padding="4dp"
             android:text="@string/title_visit"
             android:textAllCaps="false"
             android:textColor="@color/indigo"

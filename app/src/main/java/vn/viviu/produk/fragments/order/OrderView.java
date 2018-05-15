@@ -1,5 +1,9 @@
 package vn.viviu.produk.fragments.order;
 
+import java.util.List;
+
+import vn.viviu.produk.models.Order;
+
 public interface OrderView {
-    void setOrders();
+    void setOrders(List<Order> orderList);
 }

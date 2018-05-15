@@ -19,6 +19,9 @@ public class Order implements Serializable {
     private Integer ThanhToanTruoc;
     private Integer Status;
 
+    public Order() {
+    }
+
     public String getMaPhieuBan() {
         return MaPhieuBan;
     }
@@ -40,7 +43,7 @@ public class Order implements Serializable {
     }
 
     public void setNgayGiao(String ngayGiao) {
-        this.NgayGiao = NgayGiao;
+        this.NgayGiao = ngayGiao;
     }
 
     public Integer getMaNhom() {
@@ -106,4 +109,6 @@ public class Order implements Serializable {
     public void setStatus(Integer status) {
         this.Status = status;
     }
+
+
 }
