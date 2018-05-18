@@ -48,12 +48,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         final Product product = products.get(position);
         final ProductHolder productHol = holder;
         storeRef = storage.getImage(product.getProductId(), StorageUtil.TYPE_IMAGE);
-        storeRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri.toString()).into(productHol.imgProduct);
-            }
-        });
+        storeRef.getDownloadUrl().addOnSuccessListener(uri ->
+                Glide.with(context).load(uri.toString()).into(productHol.imgProduct));
 
         productHol.tvProductName.setText(product.getProductName());
         String price = formatter.format(product.getPrice()) + " VNĐ";

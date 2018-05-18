@@ -1,6 +1,10 @@
 package vn.viviu.produk.models;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ViviU on 11/8/2017.
@@ -110,5 +114,23 @@ public class Order implements Serializable {
         this.Status = status;
     }
 
+    @Exclude
+    public Map<String, Object> toMap() {
+        Map<String, Object> post = new HashMap<>();
+        post.put("MaPhieuBan", MaPhieuBan);
+        post.put("NgayDat", NgayDat);
+        post.put("NgayGiao", NgayGiao);
+        post.put("MaNhom", MaNhom);
+        post.put("NguoiDat", NguoiDat);
+        post.put("NguoiGiao", NguoiBan);
+        post.put("MaTuyen", MaTuyen);
+        post.put("MaKH", MaKH);
+        post.put("TongTien", TongTien);
+        post.put("ThanhToanTruoc", ThanhToanTruoc);
+        post.put("Status", Status);
 
+        Map<String, Object> result = new HashMap<>();
+        result.put(MaPhieuBan, post);
+        return result;
+    }
 }

@@ -27,7 +27,7 @@ public class HomeMenuAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 5;
     }
 
     @Override

@@ -154,7 +154,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
 
     @Override
     public void onBackPressed() {
-        getActivity().onBackPressed();
+
     }
 
     @Override

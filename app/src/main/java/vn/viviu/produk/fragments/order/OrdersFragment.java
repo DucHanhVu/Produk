@@ -109,7 +109,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
 
     @Override
     public void onBackPressed() {
-        getActivity().onBackPressed();
+
     }
 
     @Override
@@ -133,6 +133,4 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
 }
