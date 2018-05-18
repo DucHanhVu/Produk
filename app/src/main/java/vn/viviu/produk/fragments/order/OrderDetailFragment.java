@@ -11,15 +11,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
+import vn.viviu.produk.models.ChiTietBan;
+import vn.viviu.produk.models.Customer;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderDetailFragment extends Fragment {
+public class OrderDetailFragment extends Fragment implements OrderDetailView{
 
 
     @BindView(R.id.tv_customer_detail)
@@ -56,5 +60,10 @@ public class OrderDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void setData(List<ChiTietBan> chiTietBans, Customer customer) {
+
     }
 }
