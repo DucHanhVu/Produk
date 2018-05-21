@@ -61,7 +61,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             }
         });
 
-        holder.tvOrderTime.setText(order.getNgayGiao());
+        String orderDate = "Ngày Đặt: " + order.getNgayDat();
+        String deliveryDate = "Ngày Giao: " + order.getNgayGiao();
+        holder.tvOrderDate.setText(orderDate);
+        holder.tvDeliveryDate.setText(deliveryDate);
         holder.tvOrderTotal.setText(StringUtil.formatCurrency(order.getTongTien()));
 
         String text;
@@ -108,8 +111,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         TextView tvOrderCustomer;
         @BindView(R.id.tv_order_address)
         TextView tvOrderAddress;
-        @BindView(R.id.tv_order_time)
-        TextView tvOrderTime;
+        @BindView(R.id.tv_order_date)
+        TextView tvOrderDate;
+        @BindView(R.id.tv_delivery_date)
+        TextView tvDeliveryDate;
         @BindView(R.id.tv_order_total)
         TextView tvOrderTotal;
         @BindView(R.id.tv_order_status)

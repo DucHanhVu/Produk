@@ -94,7 +94,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:textAllCaps="true"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@color/red_500"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/img_product_detail"

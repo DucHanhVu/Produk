@@ -8,7 +8,7 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
     }
 
     @Override
-    public void getData() {
+    public void getData(String orderId) {
 
     }
 }
