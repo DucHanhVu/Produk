@@ -1,6 +1,7 @@
 package vn.viviu.produk.models;
 
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import java.util.Map;
 /**
  * Created by ViviU on 11/9/2017.
  */
-
 public class ChiTietBan implements Serializable {
     private String MaCTB;
     private String MaPhieuBan;

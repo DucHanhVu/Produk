@@ -6,5 +6,7 @@ import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 
 public interface OrderDetailView {
-    void setData(List<ChiTietBan> chiTietBans, Customer customer);
+    void setList(List<ChiTietBan> chiTietBans);
+
+    void setCustomer(Customer customer);
 }

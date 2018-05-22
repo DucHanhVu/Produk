@@ -3,7 +3,9 @@ package vn.viviu.produk.fragments.order;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,13 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
 import vn.viviu.produk.adapters.OrderDetailAdapter;
+import vn.viviu.produk.callbacks.OnPassDataListener;
 import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
 import vn.viviu.produk.utils.Key;
+import vn.viviu.produk.utils.StringUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,9 +80,38 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
         if (getArguments() != null) {
             order = (Order) getArguments().getSerializable(Key.KEY_ORDER_DETAIL);
             orderDetailPre = new OrderDetailPresenterImpl(this);
-            orderDetailPre.getData(order.getMaPhieuBan());
+            orderDetailPre.getData(order.getMaPhieuBan(), order.getMaKH());
+
+            String ngBan = "Người Bán: " + order.getNguoiBan();
+            String ngDat = "Người Đặt: " + order.getNguoiDat();
+            String maNhom = "Nhóm: " + order.getMaNhom();
+            String maTuyen = "Mã Tuyến: " + order.getMaTuyen();
+            String ngayDat = "Ngày Đặt: " + order.getNgayDat();
+            String ngayGiao = "Ngày Giao: " + order.getNgayGiao();
+            String thanhtoan;
+            if (order.getThanhToanTruoc() > 0)
+                thanhtoan = "Thanh toán trước: " + StringUtil.formatCurrency(order.getThanhToanTruoc());
+            else
+                thanhtoan = "Thanh toán ngay";
+            String tongtien = "Tổng tiền: " + StringUtil.formatCurrency(order.getTongTien());
+
+            tvNgbanDetail.setText(ngBan);
+            tvNgdatDetail.setText(ngDat);
+            tvSaleGroupDetail.setText(maNhom);
+            tvRouteDetail.setText(maTuyen);
+            tvOrderDateDetail.setText(ngayDat);
+            tvDeliveryDateDetail.setText(ngayGiao);
+            tvPayedDetail.setText(thanhtoan);
+            tvTotalDetail.setText(tongtien);
         }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        showBackButton(true);
+        hideFab();
     }
 
     @Override
@@ -88,18 +121,23 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     }
 
     @Override
-    public void setData(List<ChiTietBan> chiTietBans, Customer customer) {
+    public void setList(List<ChiTietBan> chiTietBans) {
         this.chiTietBans = chiTietBans;
-        this.customer = customer;
-
-        tvCustomerDetail.setText(customer.getTenKH());
-
-
-        String payed = "Thanh toán trước/Tổng tiền : " + order.getThanhToanTruoc() + "/"
-                + order.getTongTien() + " VNĐ";
-        tvPayedDetail.setText(payed);
-
+        adapter = new OrderDetailAdapter(getContext(), chiTietBans, passDataListener);
+        rvCtb.setAdapter(adapter);
+        rvCtb.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
+                false));
     }
+
+    @Override
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        tvCustomerDetail.setText(customer.getTenKH());
+    }
+
+    OnPassDataListener passDataListener = (position, type) -> {
+
+    };
 
     @Override
     public void onClick(View v) {
@@ -110,4 +148,6 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     public void onBackPressed() {
         getActivity().getSupportFragmentManager().popBackStack();
     }
+
+
 }

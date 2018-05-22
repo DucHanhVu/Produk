@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import vn.viviu.produk.callbacks.OnFragmentChangedListener;
 import vn.viviu.produk.callbacks.OnPassDataListener;
 import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.models.Order;
+import vn.viviu.produk.utils.Key;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,12 +77,6 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
         unbinder = ButterKnife.bind(this, view);
-        //RecyclerView set LayoutManager
-        rvOrders.setLayoutManager(new LinearLayoutManager(
-                getContext(),
-                LinearLayoutManager.VERTICAL,
-                false));
-
         if (getArguments() != null) {
 
         } else {
@@ -117,10 +113,19 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         this.orderList = orderList;
         adapter = new OrderAdapter(getContext(), orderList, passDataListener);
         rvOrders.setAdapter(adapter);
+        rvOrders.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.VERTICAL,
+                false));
     }
 
     OnPassDataListener passDataListener = (position, type) -> {
-
+        Order order = orderList.get(position);
+        OrderDetailFragment orderDetailFragment = new OrderDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Key.KEY_ORDER_DETAIL, order);
+        orderDetailFragment.setArguments(bundle);
+        listener.onFragmentChanged(orderDetailFragment, Key.KEY_ORDER_DETAIL, true);
     };
 
     @Override

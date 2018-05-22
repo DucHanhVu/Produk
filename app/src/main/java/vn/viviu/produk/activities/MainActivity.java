@@ -169,7 +169,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        fm.popBackStack();
+        if (fm.getBackStackEntryCount() > 0)
+            fm.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         switch (id) {
             case R.id.nav_main:
                 onFragmentChanged(new HomeFragment(), Key.KEY_HOME, false);

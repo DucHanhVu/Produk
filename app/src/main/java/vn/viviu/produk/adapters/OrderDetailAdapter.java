@@ -63,25 +63,28 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         storeRef.getDownloadUrl().addOnSuccessListener(uri ->
                 Glide.with(context).load(uri.toString()).into(holder.imgProductDetail));
         //Load product name
-        mDatabase.child(chiTietBan.getMaSP()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Product product = dataSnapshot.getValue(Product.class);
-                holder.tvProductDetail.setText(product.getProductName());
-            }
+        mDatabase.orderByChild("productId").equalTo(chiTietBan.getMaSP())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot post : dataSnapshot.getChildren()) {
+                            Product product = post.getValue(Product.class);
+                            holder.tvProductDetail.setText(product.getProductName());
+                        }
+                    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                    }
+                });
 
         String staff = "Mã Kho: " + chiTietBan.getMaKho();
         String dvt = "Đơn vị tính: " + chiTietBan.getDVT();
         String amounts = "Số lượng: " + chiTietBan.getSoLuong();
-        String price = "Đơn giá: " + chiTietBan.getDonGia() + " VNĐ";
+        String price = "Đơn giá: " + StringUtil.formatCurrency(chiTietBan.getDonGia());
         String discount = "Chiết Khấu: " + chiTietBan.getChietKhau() + "%";
-        String totalMoney = "Thành tiền: " + chiTietBan.getThanhTien() + " VNĐ";
+        String totalMoney = "Thành tiền:     " + StringUtil.formatCurrency(chiTietBan.getThanhTien());
 
         holder.tvStaffDetail.setText(staff);
         holder.tvDvtDetail.setText(dvt);

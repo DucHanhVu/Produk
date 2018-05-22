@@ -81,24 +81,24 @@
             android:id="@+id/tv_discount_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/red_400"
-            app:layout_constraintStart_toEndOf="@+id/tv_price_detail"
-            app:layout_constraintTop_toBottomOf="@+id/tv_amounts_detail" />
+            app:layout_constraintStart_toEndOf="@+id/img_product_detail"
+            app:layout_constraintTop_toBottomOf="@+id/tv_price_detail" />
 
         <TextView
             android:id="@+id/tv_total_money_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="10dp"
             android:textAllCaps="true"
-            android:textColor="@color/red_500"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/img_product_detail"
-            app:layout_constraintTop_toBottomOf="@+id/tv_price_detail" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_discount_detail" />
 
         <ImageButton
             android:id="@+id/del_product_order_btn"

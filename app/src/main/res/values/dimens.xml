@@ -10,4 +10,5 @@
     <dimen name="space_padding">8dp</dimen>
     <dimen name="space_padding_small">4dp</dimen>
     <dimen name="padding_16">16dp</dimen>
+    <dimen name="rv_height">400dp</dimen>
 </resources>
