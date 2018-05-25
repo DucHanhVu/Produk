@@ -72,52 +72,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_address" />
 
-        <Button
-            android:id="@+id/order_customer_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bkg_green"
-            android:drawableStart="@drawable/ic_order_green"
-            android:padding="4dp"
-            android:text="@string/title_orders"
-            android:textAllCaps="false"
-            android:textColor="@color/green_a400"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
-
-        <Button
-            android:id="@+id/report_customer_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bkg_orange"
-            android:drawableStart="@drawable/ic_report_orange"
-            android:padding="4dp"
-            android:text="@string/report"
-            android:textAllCaps="false"
-            android:textColor="@color/deep_orange"
-            app:layout_constraintEnd_toStartOf="@+id/checkin_customer_btn"
-            app:layout_constraintStart_toEndOf="@+id/order_customer_btn"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
-
-        <Button
-            android:id="@+id/checkin_customer_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="42dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bkg_blue"
-            android:drawableStart="@drawable/ic_menu_visit_blue"
-            android:padding="4dp"
-            android:text="@string/title_visit"
-            android:textAllCaps="false"
-            android:textColor="@color/indigo"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_phone">
+
+            <Button
+                android:id="@+id/order_customer_btn"
+                style="?buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_padding_small"
+                android:layout_weight="1"
+                android:background="@drawable/bkg_green"
+                android:drawableStart="@drawable/ic_order_green"
+                android:paddingEnd="@dimen/space_padding"
+                android:paddingStart="@dimen/space_padding"
+                android:text="@string/title_orders"
+                android:textAllCaps="false"
+                android:textColor="@color/green_a400" />
+
+            <Button
+                android:id="@+id/checkin_customer_btn"
+                style="?buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_padding_small"
+                android:layout_weight="1"
+                android:background="@drawable/bkg_blue"
+                android:drawableStart="@drawable/ic_menu_visit_blue"
+                android:paddingEnd="@dimen/space_padding"
+                android:paddingStart="@dimen/space_padding"
+                android:text="@string/title_visit"
+                android:textAllCaps="false"
+                android:textColor="@color/indigo" />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/more_customer_btn"

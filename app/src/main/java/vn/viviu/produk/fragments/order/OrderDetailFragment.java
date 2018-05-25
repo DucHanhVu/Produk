@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +14,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 import vn.viviu.produk.R;
 import vn.viviu.produk.adapters.OrderDetailAdapter;
 import vn.viviu.produk.callbacks.OnPassDataListener;
@@ -26,6 +31,7 @@ import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
 import vn.viviu.produk.utils.Key;
+import vn.viviu.produk.utils.StorageUtil;
 import vn.viviu.produk.utils.StringUtil;
 
 /**
@@ -55,11 +61,16 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     @BindView(R.id.rv_ctb)
     RecyclerView rvCtb;
     Unbinder unbinder;
+    @BindView(R.id.avt_customer_order_detail)
+    CircleImageView avtCustomerOrderDetail;
 
     /**
      * Adapter
      */
     private OrderDetailAdapter adapter;
+
+    private StorageUtil storageUtil;
+    private StorageReference storageRef;
 
     private OrderDetailPresenter orderDetailPre;
     private List<ChiTietBan> chiTietBans;
@@ -70,6 +81,11 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        storageUtil = new StorageUtil();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -133,6 +149,9 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     public void setCustomer(Customer customer) {
         this.customer = customer;
         tvCustomerDetail.setText(customer.getTenKH());
+        storageRef = storageUtil.getImage(customer.getHinhAnh(), StorageUtil.TYPE_AVATAR);
+        storageRef.getDownloadUrl().addOnSuccessListener(uri ->
+                Glide.with(getContext()).load(uri).into(avtCustomerOrderDetail));
     }
 
     OnPassDataListener passDataListener = (position, type) -> {
@@ -146,8 +165,7 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
 
     @Override
     public void onBackPressed() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        getActivity().getSupportFragmentManager().popBackStack(Key.KEY_ORDER_DETAIL,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
-
-
 }

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vn.viviu.produk.models.ChiTietBan;
+import vn.viviu.produk.models.Customer;
 
 public class OrderDetailPresenterImpl implements OrderDetailPresenter {
     private OrderDetailView detailView;
@@ -36,6 +36,20 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
                             chiTietBans.add(ctb);
                         }
                         detailView.setList(chiTietBans);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+
+        mDatabase.getReference("Customer").child(customerid)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Customer c = dataSnapshot.getValue(Customer.class);
+                        detailView.setCustomer(c);
                     }
 
                     @Override

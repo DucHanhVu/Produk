@@ -11,23 +11,49 @@
         android:orientation="vertical"
         android:padding="@dimen/space_padding">
 
-        <TextView
-            android:id="@+id/tv_customer_detail"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_16"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_ngdat_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_person"
-            android:gravity="center_vertical" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avt_customer_order_detail"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/faces_icon_small" />
+
+            <TextView
+                android:id="@+id/tv_customer_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="@dimen/padding_16"
+                android:layout_toEndOf="@id/avt_customer_order_detail"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_ngdat_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/avt_customer_order_detail"
+                android:layout_alignStart="@+id/tv_customer_detail"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_order_date_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_padding"
+                android:layout_alignBottom="@+id/avt_customer_order_detail"
+                android:layout_toEndOf="@+id/tv_ngdat_detail"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_time_green"
+                android:textStyle="italic" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_ngban_detail"
@@ -35,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_padding"
             android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_person"
+            android:drawableStart="@drawable/ic_person_black_24dp"
             android:gravity="center_vertical" />
 
         <TextView
@@ -53,15 +79,6 @@
             android:layout_marginTop="@dimen/space_padding"
             android:drawablePadding="@dimen/space_padding"
             android:drawableStart="@drawable/ic_menu_visit" />
-
-        <TextView
-            android:id="@+id/tv_order_date_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_time_green"
-            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/tv_delivery_date_detail"

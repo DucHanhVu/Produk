@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".fragments.customer.CustomerDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/banner_customer_detail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="32dp"
+            android:background="@color/gray_active_icon"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar_customer_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_customer_detail"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/faces_icon_small"
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.32" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_16"
+            android:paddingEnd="@dimen/space_padding"
+            android:paddingStart="@dimen/space_padding"
+            android:paddingTop="@dimen/padding_16"
+            app:layout_anchor="@id/avatar_customer_detail"
+            app:layout_anchorGravity="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatar_customer_detail">
+
+            <TextView
+                android:id="@+id/tv_id_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_name_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_nglh_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_person_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_address_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_menu_visit" />
+
+            <TextView
+                android:id="@+id/tv_phone_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_phone" />
+
+            <TextView
+                android:id="@+id/tv_email_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_email_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_note_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_note_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_debt_customer_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:drawableStart="@drawable/ic_money_red"
+                android:textColor="@color/red_500" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

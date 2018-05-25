@@ -1,14 +1,10 @@
 package vn.viviu.produk.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
@@ -77,7 +72,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         private TextView tvAddress;
         private TextView tvPhone;
         private Button btnOrder;
-        private Button btnReport;
         private Button btnCheckIn;
         private ImageButton btnMore;
 
@@ -89,14 +83,13 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
             tvAddress = itemView.findViewById(R.id.tv_address);
             tvPhone = itemView.findViewById(R.id.tv_phone);
             btnOrder = itemView.findViewById(R.id.order_customer_btn);
-            btnReport = itemView.findViewById(R.id.report_customer_btn);
             btnCheckIn = itemView.findViewById(R.id.checkin_customer_btn);
             btnMore = itemView.findViewById(R.id.more_customer_btn);
 
-            btnOrder.setOnClickListener(CustomerHolder.this);
-            btnCheckIn.setOnClickListener(CustomerHolder.this);
-            btnReport.setOnClickListener(CustomerHolder.this);
-            btnMore.setOnClickListener(CustomerHolder.this);
+            itemView.setOnClickListener(this);
+            btnOrder.setOnClickListener(this);
+            btnCheckIn.setOnClickListener(this);
+            btnMore.setOnClickListener(this);
         }
 
         @Override
@@ -106,15 +99,15 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                 showPopupMenu();
             else if (viewId == R.id.order_customer_btn)
                 listener.onDataPassed(getAdapterPosition(), 0);
-            else if (viewId == R.id.report_customer_btn)
-                listener.onDataPassed(getAdapterPosition(), 1);
             else if (viewId == R.id.checkin_customer_btn)
                 listener.onDataPassed(getAdapterPosition(), 2);
+            else
+                listener.onDataPassed(getAdapterPosition(), -1);
         }
 
         private void showPopupMenu() {
             PopupMenu popupMenu = new PopupMenu(context, btnMore);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu_customer, popupMenu.getMenu());
+            popupMenu.getMenuInflater().inflate(R.menu.menu_customer, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.action_edit:
@@ -122,6 +115,8 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
                         break;
                     case R.id.action_delete:
                         listener.onDataPassed(getAdapterPosition(), 4);
+                    case R.id.action_report:
+                        listener.onDataPassed(getAdapterPosition(), 1);
                 }
                 return true;
             });

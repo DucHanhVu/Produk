@@ -2,7 +2,6 @@ package vn.viviu.produk.fragments.customer;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -113,24 +112,20 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
      */
     OnPassDataListener dataListener = (position, type) -> {
         switch (type) {
-            case 0: {
+            case 0:
                 break;
-            }
-            case 1: {
+            case 1:
                 break;
-            }
-            case 2: {
+            case 2:
                 break;
-            }
-            case 3: {
+            case 3:
                 BaseFragment newFragment = new AddCustomerFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Key.KEY_CUSTOMER, customers.get(position));
                 newFragment.setArguments(bundle);
                 listener.onFragmentChanged(newFragment, null, true);
                 break;
-            }
-            case 4: {
+            case 4:
                 AlertDialog.Builder al = new AlertDialog.Builder(getContext());
                 al.setTitle("Delete Customer")
                         .setMessage("Are you sure delete customer?")
@@ -139,7 +134,13 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
                                 customerPre.onDelete(customers.get(position)));
                 al.create().show();
                 break;
-            }
+            case -1:
+                CustomerDetailFragment detailFragment = new CustomerDetailFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable(Key.KEY_CUSTOMER_DETAIL, customers.get(position));
+                detailFragment.setArguments(bundle1);
+                listener.onFragmentChanged(detailFragment, Key.KEY_CUSTOMER_DETAIL, true);
+                break;
         }
 
     };
