@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,11 +64,20 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        customerPre = new CustomerPresenterImpl(this);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_customer, container, false);
         unbinder = ButterKnife.bind(this, v);
-        customerPre = new CustomerPresenterImpl(this);
+        customers = new ArrayList<>(0);
+        adapter = new CustomerAdapter(getContext(), customers, dataListener);
+        rvCustomer.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rvCustomer.setAdapter(adapter);
         customerPre.getCustomers();
         return v;
     }
@@ -91,9 +101,7 @@ public class CustomerFragment extends BaseFragment implements CustomerView {
     public void setData(List<Customer> customers) {
         Log.d("CustomerSize", String.valueOf(customers.size()));
         this.customers = customers;
-        adapter = new CustomerAdapter(getContext(), customers, dataListener);
-        rvCustomer.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        rvCustomer.setAdapter(adapter);
+        adapter.update(customers);
     }
 
     @Override

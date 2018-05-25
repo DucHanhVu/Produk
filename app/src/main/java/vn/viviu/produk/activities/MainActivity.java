@@ -31,16 +31,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 import vn.viviu.produk.R;
-import vn.viviu.produk.callbacks.OnBackPressListener;
-import vn.viviu.produk.fragments.order.OrdersFragment;
-import vn.viviu.produk.models.User;
 import vn.viviu.produk.activities.login.LoginActivity;
+import vn.viviu.produk.callbacks.OnBackPressListener;
 import vn.viviu.produk.callbacks.OnFragmentChangedListener;
+import vn.viviu.produk.fragments.HomeFragment;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
-import vn.viviu.produk.fragments.HomeFragment;
+import vn.viviu.produk.fragments.order.OrdersFragment;
 import vn.viviu.produk.fragments.statistical.StatisticFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
+import vn.viviu.produk.models.User;
 import vn.viviu.produk.utils.Key;
 import vn.viviu.produk.utils.StorageUtil;
 import vn.viviu.produk.utils.StringUtil;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             fm = getSupportFragmentManager();
             transaction = fm.beginTransaction();
-            transaction.add(R.id.container_main, new CustomerFragment()).commit();
+            transaction.replace(R.id.container_main, new OrdersFragment()).commit();
         }
     }
 

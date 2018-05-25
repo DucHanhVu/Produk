@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,6 +86,7 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         storageUtil = new StorageUtil();
+        orderDetailPre = new OrderDetailPresenterImpl(this);
     }
 
     @Override
@@ -93,22 +95,29 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
+        chiTietBans = new ArrayList<>(0);
+        adapter = new OrderDetailAdapter(getContext(), chiTietBans, passDataListener);
+        rvCtb.setAdapter(adapter);
+        rvCtb.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
+                false));
+
         if (getArguments() != null) {
             order = (Order) getArguments().getSerializable(Key.KEY_ORDER_DETAIL);
-            orderDetailPre = new OrderDetailPresenterImpl(this);
             orderDetailPre.getData(order.getMaPhieuBan(), order.getMaKH());
 
             String ngBan = "Người Bán: " + order.getNguoiBan();
-            String ngDat = "Người Đặt: " + order.getNguoiDat();
+            String ngDat = order.getNguoiDat();
             String maNhom = "Nhóm: " + order.getMaNhom();
             String maTuyen = "Mã Tuyến: " + order.getMaTuyen();
             String ngayDat = "Ngày Đặt: " + order.getNgayDat();
             String ngayGiao = "Ngày Giao: " + order.getNgayGiao();
             String thanhtoan;
-            if (order.getThanhToanTruoc() > 0)
-                thanhtoan = "Thanh toán trước: " + StringUtil.formatCurrency(order.getThanhToanTruoc());
+            if (order.getThanhToanTruoc() == 0) {
+                thanhtoan = "Chưa thanh toán...";
+            }else if (order.getThanhToanTruoc().equals(order.getTongTien()))
+                thanhtoan = "Thanh toán ngay!";
             else
-                thanhtoan = "Thanh toán ngay";
+                thanhtoan = "Thanh toán trước: " + StringUtil.formatCurrency(order.getThanhToanTruoc());
             String tongtien = "Tổng tiền: " + StringUtil.formatCurrency(order.getTongTien());
 
             tvNgbanDetail.setText(ngBan);
@@ -139,10 +148,7 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     @Override
     public void setList(List<ChiTietBan> chiTietBans) {
         this.chiTietBans = chiTietBans;
-        adapter = new OrderDetailAdapter(getContext(), chiTietBans, passDataListener);
-        rvCtb.setAdapter(adapter);
-        rvCtb.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
-                false));
+        adapter.update(chiTietBans);
     }
 
     @Override

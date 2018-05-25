@@ -65,6 +65,11 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Custom
         return customers.size();
     }
 
+    public void update(List<Customer> newList) {
+        customers = newList;
+        notifyDataSetChanged();
+    }
+
     public class CustomerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private CircleImageView avatar;
         private TextView customerName;

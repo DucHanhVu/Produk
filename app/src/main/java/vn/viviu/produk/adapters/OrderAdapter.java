@@ -106,6 +106,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
         return orderList.size();
     }
 
+    public void update(List<Order> newOrder) {
+        orderList = newOrder;
+        notifyDataSetChanged();
+    }
+
     class OrderHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.tv_order_customer)
         TextView tvOrderCustomer;

@@ -99,6 +99,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         return chiTietBans.size();
     }
 
+    public void update(List<ChiTietBan> newList) {
+        chiTietBans = newList;
+        notifyDataSetChanged();
+    }
+
     protected class OrderDetailHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.img_product_detail)
         ImageView imgProductDetail;

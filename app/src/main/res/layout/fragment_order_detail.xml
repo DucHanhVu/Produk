@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginStart="@dimen/padding_16"
                 android:layout_toEndOf="@id/avt_customer_order_detail"
                 android:textColor="@color/black"
@@ -37,23 +36,9 @@
                 android:id="@+id/tv_ngdat_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/avt_customer_order_detail"
-                android:layout_alignStart="@+id/tv_customer_detail"
-                android:drawablePadding="@dimen/space_padding"
-                android:drawableStart="@drawable/ic_person_black_24dp" />
-
-            <TextView
-                android:id="@+id/tv_order_date_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_padding"
-                android:layout_alignBottom="@+id/avt_customer_order_detail"
-                android:layout_toEndOf="@+id/tv_ngdat_detail"
-                android:drawablePadding="@dimen/space_padding"
-                android:drawableStart="@drawable/ic_time_green"
-                android:textStyle="italic" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/tv_customer_detail" />
         </RelativeLayout>
-
 
         <TextView
             android:id="@+id/tv_ngban_detail"
@@ -79,6 +64,14 @@
             android:layout_marginTop="@dimen/space_padding"
             android:drawablePadding="@dimen/space_padding"
             android:drawableStart="@drawable/ic_menu_visit" />
+
+        <TextView
+            android:id="@+id/tv_order_date_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/space_padding"
+            android:drawableStart="@drawable/ic_time_green"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/tv_delivery_date_detail"
