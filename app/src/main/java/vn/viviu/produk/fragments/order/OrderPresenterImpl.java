@@ -20,7 +20,7 @@ public class OrderPresenterImpl implements OrderPresenter {
     private List<Order> orderList;
     private final static String TAG = "Order";
 
-    public OrderPresenterImpl(OrderView orderView) {
+    OrderPresenterImpl(OrderView orderView) {
         this.orderView = orderView;
         mDatabase = FirebaseDatabase.getInstance().getReference("PhieuBanHang");
     }
@@ -64,5 +64,16 @@ public class OrderPresenterImpl implements OrderPresenter {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+    }
+
+    @Override
+    public void onQueryChanged(String query) {
+        List<Order> newOrder = new ArrayList<>();
+        for (Order c : orderList) {
+            if (c.getMaPhieuBan().contains(query) || c.getNguoiDat().contains(query) ||
+                    c.getMaKH().contains(query) || c.getMaTuyen().contains(query))
+                newOrder.add(c);
+        }
+        orderView.setOrders(newOrder);
     }
 }

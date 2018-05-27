@@ -4,4 +4,6 @@ public interface OrderPresenter {
     void getOrder();
 
     void getOrderByCustomer(String customerId);
+
+    void onQueryChanged(String query);
 }

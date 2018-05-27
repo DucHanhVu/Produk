@@ -64,6 +64,8 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     Unbinder unbinder;
     @BindView(R.id.avt_customer_order_detail)
     CircleImageView avtCustomerOrderDetail;
+    @BindView(R.id.tv_debt_order_detail)
+    TextView tvDebtOrderDetail;
 
     /**
      * Adapter
@@ -114,7 +116,7 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
             String thanhtoan;
             if (order.getThanhToanTruoc() == 0) {
                 thanhtoan = "Chưa thanh toán...";
-            }else if (order.getThanhToanTruoc().equals(order.getTongTien()))
+            } else if (order.getThanhToanTruoc().equals(order.getTongTien()))
                 thanhtoan = "Thanh toán ngay!";
             else
                 thanhtoan = "Thanh toán trước: " + StringUtil.formatCurrency(order.getThanhToanTruoc());
@@ -155,9 +157,12 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     public void setCustomer(Customer customer) {
         this.customer = customer;
         tvCustomerDetail.setText(customer.getTenKH());
+        String debt = "Hạn mức công nợ: " + StringUtil.formatCurrency(customer.getHanMucCN());
+        tvDebtOrderDetail.setText(debt);
         storageRef = storageUtil.getImage(customer.getHinhAnh(), StorageUtil.TYPE_AVATAR);
         storageRef.getDownloadUrl().addOnSuccessListener(uri ->
                 Glide.with(getContext()).load(uri).into(avtCustomerOrderDetail));
+
     }
 
     OnPassDataListener passDataListener = (position, type) -> {

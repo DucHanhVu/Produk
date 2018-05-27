@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
 import vn.viviu.produk.adapters.OrderAdapter;
@@ -51,6 +52,8 @@ public class OrdersFragment extends BaseFragment implements OrderView,
 
     private List<Order> orderList;
 
+    private final static String TAG = "Order Fragment";
+
     public OrdersFragment() {
         // Required empty public constructor
     }
@@ -76,18 +79,14 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_orders, container, false);
         unbinder = ButterKnife.bind(this, view);
-        if (getArguments() != null) {
+        orderList = new ArrayList<>(0);
+        adapter = new OrderAdapter(getContext(), orderList, passDataListener);
+        rvOrders.setAdapter(adapter);
+        rvOrders.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.VERTICAL,
+                false));
 
-        } else {
-            orderList = new ArrayList<>(0);
-            adapter = new OrderAdapter(getContext(), orderList, passDataListener);
-            rvOrders.setAdapter(adapter);
-            rvOrders.setLayoutManager(new LinearLayoutManager(
-                    getContext(),
-                    LinearLayoutManager.VERTICAL,
-                    false));
-            orderPre.getOrder();
-        }
         return view;
     }
 
@@ -96,6 +95,13 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         super.onViewCreated(view, savedInstanceState);
         showFab();
         showBackButton(false);
+        if (getArguments() != null) {
+            String customerId = getArguments().getString(Key.KEY_CUSTOMER);
+            orderPre.getOrderByCustomer(customerId);
+        } else {
+            orderPre.getOrder();
+        }
+        searchView.setOnQueryChangeListener(this);
     }
 
     @Override
@@ -104,9 +110,10 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         setTitle(R.string.title_orders);
     }
 
+    @OnClick(R.id.fab)
     @Override
     public void onClick(View v) {
-
+        
     }
 
     @Override
@@ -131,7 +138,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
 
     @Override
     public void onSearchTextChanged(String oldQuery, String newQuery) {
-
+        orderPre.onQueryChanged(newQuery);
     }
 
     @Override

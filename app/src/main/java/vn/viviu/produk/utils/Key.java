@@ -16,6 +16,7 @@ public class Key {
     public static final String KEY_CHECK_IN = "Check in";
     public static final String KEY_ORDER = "Orders";
     public static final String KEY_ORDER_DETAIL = "Order_Detail";
+    public static final String KEY_ADD_ORDER = "Add_Order";
     public static final String KEY_ADD_CUSTOMER = "Add Customer";
     public static final String KEY_CAMERA = "Camera";
     public static final int ADD_CUSTOMER_CODE = 100;
