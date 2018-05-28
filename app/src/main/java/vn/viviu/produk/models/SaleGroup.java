@@ -17,6 +17,16 @@ public class SaleGroup implements Serializable {
 
     private Boolean TrangThai;
 
+    public SaleGroup(String maKV, Integer maNhom, String tenNhom, Boolean trangThai) {
+        MaKV = maKV;
+        MaNhom = maNhom;
+        TenNhom = tenNhom;
+        TrangThai = trangThai;
+    }
+
+    public SaleGroup() {
+    }
+
     public String getMaKV() {
         return MaKV;
     }

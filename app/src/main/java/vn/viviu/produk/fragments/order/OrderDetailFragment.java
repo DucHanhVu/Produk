@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -89,6 +92,7 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
         super.onCreate(savedInstanceState);
         storageUtil = new StorageUtil();
         orderDetailPre = new OrderDetailPresenterImpl(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -178,5 +182,21 @@ public class OrderDetailFragment extends BaseFragment implements OrderDetailView
     public void onBackPressed() {
         getActivity().getSupportFragmentManager().popBackStack(Key.KEY_ORDER_DETAIL,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_edit, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_edit) {
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

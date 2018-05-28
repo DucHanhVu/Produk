@@ -19,7 +19,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
 import vn.viviu.produk.adapters.OrderAdapter;
@@ -102,6 +101,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
             orderPre.getOrder();
         }
         searchView.setOnQueryChangeListener(this);
+        fab.setOnClickListener(this);
     }
 
     @Override
@@ -110,10 +110,12 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         setTitle(R.string.title_orders);
     }
 
-    @OnClick(R.id.fab)
     @Override
     public void onClick(View v) {
-        
+        if (v.getId() == R.id.fab){
+            listener.onFragmentChanged(new AddOrderFragment(), Key.KEY_ADD_ORDER, true);
+        }
+
     }
 
     @Override
