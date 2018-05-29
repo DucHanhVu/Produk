@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private DatabaseReference dataRef;
-    private StorageUtil storage;
+    private StorageUtil storage = new StorageUtil();
 
     /**
      * var static
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity
         //Fire base
         mAuth = FirebaseAuth.getInstance();
         dataRef = FirebaseDatabase.getInstance().getReference("User");
-        storage = new StorageUtil();
 
         //Fragment Manager
         if (savedInstanceState == null) {

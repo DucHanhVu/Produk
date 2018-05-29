@@ -1,11 +1,13 @@
 package vn.viviu.produk.fragments.order;
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,17 +16,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
 import vn.viviu.produk.fragments.BaseFragment;
+import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
+import vn.viviu.produk.models.Provider;
 import vn.viviu.produk.models.SaleGroup;
 import vn.viviu.produk.models.Stream;
 import vn.viviu.produk.utils.Key;
@@ -49,8 +56,23 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     Spinner spinOrderTuyen;
     @BindView(R.id.spin_order_nhom)
     Spinner spinOrderNhom;
+    @BindView(R.id.ngdat_img_btn)
+    ImageButton ngdatImgBtn;
+    @BindView(R.id.nggiao_img_btn)
+    ImageButton nggiaoImgBtn;
+    @BindView(R.id.ngban_img_btn)
+    ImageButton ngbanImgBtn;
+    @BindView(R.id.customer_img_btn)
+    ImageButton customerImgBtn;
     Unbinder unbinder;
 
+    private AlertDialog.Builder mBuilder;
+    private Spinner spinDialog;
+
+    /**
+     * Tool Util
+     */
+    private Calendar calendar;
     private AddOrderPresenter addOrderPre;
     private Order order;
 
@@ -67,6 +89,7 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         addOrderPre = new AddOrderPresenterImpl(this);
+        calendar = Calendar.getInstance();
     }
 
     @Override
@@ -108,10 +131,64 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
         unbinder.unbind();
     }
 
+    @OnClick({R.id.customer_img_btn, R.id.ngban_img_btn, R.id.ngdat_img_btn, R.id.nggiao_img_btn})
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ngdat_img_btn:
+                showDatePickerDialog(edtNgayDat);
+                break;
+            case R.id.nggiao_img_btn:
+                showDatePickerDialog(edtNgayGiao);
+                break;
+            case R.id.customer_img_btn:
+                showSpinnerDialog(customerImgBtn);
+                break;
+            case R.id.ngban_img_btn:
+                showSpinnerDialog(ngbanImgBtn);
+                break;
+        }
+    }
+
+    private void showDatePickerDialog(EditText view) {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog.OnDateSetListener dateSetListener = (v, y, m, d) -> {
+            String date = d + "/" + (m + 1) + "/" + y;
+            view.setText(date);
+        };
+        DatePickerDialog datePickerDialog =
+                new DatePickerDialog(getContext(), dateSetListener, year, month, day);
+        datePickerDialog.setTitle(R.string.choose_date);
+        datePickerDialog.show();
+    }
+
+    private void showSpinnerDialog(View v) {
+        mBuilder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+        spinDialog = view.findViewById(R.id.spin_dialog);
+        if (v == customerImgBtn)
+            addOrderPre.getCustomer();
+        else if (v == ngbanImgBtn)
+            addOrderPre.getNCC();
+        mBuilder.setTitle(R.string.dialog);
+        mBuilder.setView(view);
+        mBuilder.setPositiveButton(R.string.ok, (dialog, which) -> dialog.cancel());
+        mBuilder.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager()
+                .popBackStackImmediate(Key.KEY_ADD_ORDER, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
     @Override
     public void setRouteSpin(List<Stream> routes) {
         this.routes = routes;
         List<String> listRoutes = new ArrayList<>();
+        listRoutes.add(getString(R.string.choose_route));
         for (Stream r : routes) {
             listRoutes.add(r.getTenTuyen());
         }
@@ -127,6 +204,7 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     public void setGroupSpin(List<SaleGroup> saleGroups) {
         this.saleGroups = saleGroups;
         List<String> listSales = new ArrayList<>();
+        listSales.add(getString(R.string.choose_sales));
         for (SaleGroup s : saleGroups) {
             listSales.add(s.getTenNhom());
         }
@@ -139,14 +217,35 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     }
 
     @Override
-    public void onClick(View v) {
+    public void setCustomerDialog(List<Customer> customers) {
+        List<String> customerString = new ArrayList<>();
+        customerString.add(getString(R.string.choose_customer));
+        for (Customer c : customers) {
+            customerString.add(c.getTenKH());
+        }
 
+        spinAdapter = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                customerString
+        );
+        spinDialog.setAdapter(spinAdapter);
     }
 
     @Override
-    public void onBackPressed() {
-        getActivity().getSupportFragmentManager()
-                .popBackStackImmediate(Key.KEY_ADD_ORDER, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    public void setNccDialog(List<Provider> providers) {
+        List<String> pString = new ArrayList<>();
+        pString.add(getString(R.string.choose_ncc));
+        for (Provider p : providers) {
+            pString.add(p.getTenNCC());
+        }
+
+        spinAdapter = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                pString
+        );
+        spinDialog.setAdapter(spinAdapter);
     }
 
     @Override

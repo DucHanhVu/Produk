@@ -13,13 +13,25 @@ public class Provider implements Serializable {
 
     private String MaNCC;
 
-    private Integer MaSoThue;
+    private long MaSoThue;
 
-    private Integer SDT;
+    private long SDT;
 
     private String TenNCC;
 
     private String TrangThai;
+
+    public Provider() {
+    }
+
+    public Provider(String diaChi, String maNCC, long maSoThue, long SDT, String tenNCC, String trangThai) {
+        DiaChi = diaChi;
+        MaNCC = maNCC;
+        MaSoThue = maSoThue;
+        this.SDT = SDT;
+        TenNCC = tenNCC;
+        TrangThai = trangThai;
+    }
 
     public String getDiaChi() {
         return DiaChi;
@@ -37,19 +49,19 @@ public class Provider implements Serializable {
         this.MaNCC = maNCC;
     }
 
-    public Integer getMaSoThue() {
+    public long getMaSoThue() {
         return MaSoThue;
     }
 
-    public void setMaSoThue(Integer maSoThue) {
+    public void setMaSoThue(long maSoThue) {
         this.MaSoThue = maSoThue;
     }
 
-    public Integer getSDT() {
+    public long getSDT() {
         return SDT;
     }
 
-    public void setSDT(Integer sDT) {
+    public void setSDT(long sDT) {
         this.SDT = sDT;
     }
 

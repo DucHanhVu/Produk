@@ -66,5 +66,12 @@
     <string name="add_product">Add Product</string>
     <string name="add_order">Add Order</string>
     <string name="title_edit">Edit</string>
+    <string name="choose_date">Choose Date</string>
+    <string name="choose_route">Choose a route…</string>
+    <string name="choose_sales">Choose a sales…</string>
+    <string name="choose_customer">Choose a customer…</string>
+    <string name="provider">Provider</string>
+    <string name="dialog">Dialog</string>
+    <string name="choose_ncc">Choose a provider…</string>
 
 </resources>
