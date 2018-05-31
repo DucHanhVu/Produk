@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -45,6 +44,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         fab.show();
     }
 
+
     /**
      * Shows Home button as Back button
      * Took from here {@link}https://stackoverflow.com/a/36677279/9381524
@@ -56,7 +56,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * @param show = true to show <showHomeAsUp> or show = false to show <Hamburger> button
      */
     protected void showBackButton(boolean show) {
-
         if (show) {
             // Remove hamburger
             toggle.setDrawerIndicatorEnabled(false);
@@ -70,7 +69,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
                 toggle.setToolbarNavigationClickListener(v -> onBackPressed());
                 mToolBarNavigationListenerIsRegistered = true;
             }
-
         } else {
             // Remove back button
             actionBar.setDisplayHomeAsUpEnabled(false);
@@ -93,6 +91,10 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      */
     protected void setTitle(int resId) {
         getActivity().setTitle(getResources().getString(resId));
+    }
+
+    protected void setTitle(CharSequence title) {
+        getActivity().setTitle(title);
     }
 
     @Override

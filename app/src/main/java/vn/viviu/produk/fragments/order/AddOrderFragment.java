@@ -14,10 +14,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,6 +67,8 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     @BindView(R.id.customer_img_btn)
     ImageButton customerImgBtn;
     Unbinder unbinder;
+    @BindView(R.id.edt_order_customer_name)
+    EditText edtOrderCustomerName;
 
     private AlertDialog.Builder mBuilder;
     private Spinner spinDialog;
@@ -116,13 +120,21 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
             edtNgayGiao.setText(order.getNgayGiao());
             edtOrderNgban.setText(order.getNguoiBan());
             edtOrderNgdat.setText(order.getNguoiDat());
-        }
+            edtOrderId.setEnabled(false);
+
+            String customerName = getArguments().getString(Key.KEY_CUSTOMER);
+            edtOrderCustomerName.setText(customerName);
+        } else
+            order = new Order();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        setTitle(R.string.add_order);
+        if (getArguments() != null)
+            setTitle(R.string.edit_order);
+        else
+            setTitle(R.string.add_order);
     }
 
     @Override
@@ -198,6 +210,20 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
                 listRoutes
         );
         spinOrderTuyen.setAdapter(spinAdapter);
+        spinOrderTuyen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0)
+                    order.setMaTuyen(routes.get(position - 1).getMaTuyen());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        if (order.getMaTuyen() != null)
+            spinOrderTuyen.setSelection(addOrderPre.itemSelectRoute(order.getMaTuyen()));
     }
 
     @Override
@@ -214,6 +240,20 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
                 listSales
         );
         spinOrderNhom.setAdapter(spinAdapter);
+        spinOrderNhom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0)
+                    order.setMaNhom(saleGroups.get(position - 1).getMaNhom());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        if (order.getMaNhom() != null)
+            spinOrderNhom.setSelection(addOrderPre.itemSelectGroup(order.getMaNhom()));
     }
 
     @Override
@@ -230,6 +270,28 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
                 customerString
         );
         spinDialog.setAdapter(spinAdapter);
+        spinDialog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    String cId = customers.get(position - 1).getMaKH();
+                    String ngLh = customers.get(position - 1).getNguoiLienHe();
+                    String name = customers.get(position - 1).getTenKH();
+                    edtOrderCustomer.setText(cId);
+                    edtOrderCustomerName.setText(name);
+                    edtOrderNgdat.setText(ngLh);
+                } else {
+                    edtOrderCustomer.setText("");
+                    edtOrderNgdat.setText("");
+                    edtOrderCustomerName.setText("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -246,6 +308,34 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
                 pString
         );
         spinDialog.setAdapter(spinAdapter);
+        spinDialog.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    String cId = providers.get(position - 1).getMaNCC();
+                    edtOrderNgban.setText(cId);
+
+                } else {
+                    edtOrderNgban.setText("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onError(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess() {
+        Toast.makeText(getContext(), "Success!!!", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 
     @Override
@@ -258,9 +348,23 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_edit) {
-
+        if (id == R.id.action_save) {
+            saveData();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveData() {
+        order.setMaPhieuBan(edtOrderId.getText().toString());
+        order.setMaKH(edtOrderCustomer.getText().toString());
+        order.setNguoiDat(edtOrderNgdat.getText().toString());
+        order.setNguoiBan(edtOrderNgban.getText().toString());
+        order.setNgayDat(edtNgayDat.getText().toString());
+        order.setNgayGiao(edtNgayGiao.getText().toString());
+        order.setStatus(0);
+        order.setThanhToanTruoc(0);
+        order.setTongTien(0);
+        //Put data
+        addOrderPre.putData(order);
     }
 }

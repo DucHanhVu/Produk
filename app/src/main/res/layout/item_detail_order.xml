@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/deep_orange"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toEndOf="@+id/img_product_detail"
             app:layout_constraintTop_toBottomOf="@+id/tv_amounts_detail" />

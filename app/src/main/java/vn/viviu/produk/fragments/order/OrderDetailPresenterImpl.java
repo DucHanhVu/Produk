@@ -12,6 +12,7 @@ import java.util.List;
 
 import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
+import vn.viviu.produk.models.Order;
 
 public class OrderDetailPresenterImpl implements OrderDetailPresenter {
     private OrderDetailView detailView;
@@ -19,13 +20,27 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
     private List<ChiTietBan> chiTietBans;
     private final static String TAG = "OrderDetail";
 
-    public OrderDetailPresenterImpl(OrderDetailView detailView) {
+    OrderDetailPresenterImpl(OrderDetailView detailView) {
         this.detailView = detailView;
         mDatabase = FirebaseDatabase.getInstance();
     }
 
     @Override
-    public void getData(String orderId, String customerid) {
+    public void getData(String orderId) {
+        mDatabase.getReference("PhieuBanHang").child(orderId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Order order = dataSnapshot.getValue(Order.class);
+                detailView.setOrder(order);
+                getCustomer(order.getMaKH());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+
         mDatabase.getReference("ChiTietBan").orderByChild("MaPhieuBan").equalTo(orderId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -43,8 +58,10 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
                         Log.e(TAG, "onCancelled", databaseError.toException());
                     }
                 });
+    }
 
-        mDatabase.getReference("Customer").child(customerid)
+    private void getCustomer(String customerId) {
+        mDatabase.getReference("Customer").child(customerId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

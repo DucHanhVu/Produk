@@ -12,7 +12,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +95,7 @@ public class AddCustomerPreImpl implements AddCustomerPre {
     @Override
     public void putData(Customer customer) {
         if (customer.getMaKH() == null) {
-            addCustomerView.onError(0, "Customer ID is null");
+            addCustomerView.onError(0, "Customer ID is not null");
         } else {
             Map<String, Object> postData = customer.toMap();
             mDatabase.getReference("Customer").updateChildren(postData)

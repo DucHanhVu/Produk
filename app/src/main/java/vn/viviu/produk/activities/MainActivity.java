@@ -175,7 +175,6 @@ public class MainActivity extends AppCompatActivity
                 onFragmentChanged(new HomeFragment(), Key.KEY_HOME, false);
                 break;
             case R.id.nav_notifications:
-//                onFragmentChanged(new ProductManagerFragment(), Key.KEY_PRODUCT);
                 break;
             case R.id.nav_check_in:
                 onFragmentChanged(new CheckInFragment(), Key.KEY_CHECK_IN, false);

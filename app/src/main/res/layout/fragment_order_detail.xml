@@ -1,140 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.order.OrderDetailFragment">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/space_padding">
+        android:background="@color/light_gray">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/banner_order"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_image"
+            app:layout_constraintBottom_toBottomOf="@+id/avt_customer_order_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/avt_customer_order_detail"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:src="@drawable/faces_icon_small" />
-
-            <TextView
-                android:id="@+id/tv_customer_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/padding_16"
-                android:layout_toEndOf="@id/avt_customer_order_detail"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_ngdat_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/tv_customer_detail" />
-        </RelativeLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avt_customer_order_detail"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="@dimen/nav_header_height"
+            android:src="@drawable/faces_icon_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_ngban_detail"
+            android:id="@+id/tv_customer_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_person_black_24dp"
-            android:gravity="center_vertical" />
+            android:layout_marginStart="8dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/avt_customer_order_detail"
+            app:layout_constraintStart_toEndOf="@+id/avt_customer_order_detail"
+            app:layout_constraintTop_toTopOf="@+id/avt_customer_order_detail"
+            app:layout_constraintVertical_bias="0.19" />
 
         <TextView
-            android:id="@+id/tv_sale_group_detail"
+            android:id="@+id/tv_ngdat_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_group_work" />
-
-        <TextView
-            android:id="@+id/tv_route_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_menu_visit" />
-
-        <TextView
-            android:id="@+id/tv_order_date_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_time_green"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/tv_delivery_date_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_time_indigo"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/tv_debt_order_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_padding"
-            android:drawablePadding="@dimen/space_padding"
-            android:drawableStart="@drawable/ic_money_red"
-            android:textColor="@color/red_500" />
+            android:layout_alignStart="@+id/tv_customer_detail"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@+id/tv_customer_detail"
+            app:layout_constraintTop_toBottomOf="@+id/tv_customer_detail" />
 
         <LinearLayout
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/white"
             android:orientation="vertical"
-            android:padding="@dimen/space_padding">
+            android:paddingEnd="@dimen/space_padding"
+            android:paddingStart="@dimen/space_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avt_customer_order_detail">
 
             <TextView
-                android:id="@+id/tv_payed_detail"
+                android:id="@+id/tv_ngban_detail"
+                style="@style/TextDetailStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/space_padding"
-                android:paddingTop="@dimen/space_padding"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_person_black_24dp" />
 
             <TextView
-                android:id="@+id/tv_total_detail"
+                android:id="@+id/tv_sale_group_detail"
+                style="@style/TextDetailStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/space_padding"
-                android:paddingTop="@dimen/space_padding"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_group_work" />
+
+            <TextView
+                android:id="@+id/tv_route_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_menu_visit" />
+
+            <TextView
+                android:id="@+id/tv_order_date_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_time_green"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_delivery_date_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_time_indigo"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tv_debt_order_detail"
+                style="@style/TextDetailStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/space_padding"
+                android:drawableStart="@drawable/ic_money_red"
+                android:textColor="@color/red_500" />
         </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:cardElevation="@dimen/space_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/space_padding">
+
+                <TextView
+                    android:id="@+id/tv_payed_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space_padding"
+                    android:paddingTop="@dimen/space_padding"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_total_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space_padding"
+                    android:paddingTop="@dimen/space_padding"
+                    android:textAllCaps="true"
+                    android:textColor="@color/teal"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/add_product_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bkg_btn_pressed"
+            android:background="@drawable/bkg_btn"
             android:text="@string/add_product"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_ctb"
             android:layout_width="match_parent"
             android:layout_height="@dimen/rv_height"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_product_btn"
             tools:listitem="@layout/item_detail_order" />
-    </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>

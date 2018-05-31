@@ -9,8 +9,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import vn.viviu.produk.models.Customer;
+import vn.viviu.produk.models.Order;
 import vn.viviu.produk.models.Provider;
 import vn.viviu.produk.models.SaleGroup;
 import vn.viviu.produk.models.Stream;
@@ -24,6 +26,8 @@ public class AddOrderPresenterImpl implements AddOrderPresenter {
     private List<Customer> customers;
     private List<Provider> providers;
 
+    private int n;
+    private int i;
     private final static String TAG = "Add_Order";
 
     AddOrderPresenterImpl(AddOrderView addOrderView) {
@@ -104,5 +108,43 @@ public class AddOrderPresenterImpl implements AddOrderPresenter {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+    }
+
+    @Override
+    public int itemSelectRoute(String value) {
+        n = routes.size();
+        if (n > 0) {
+            for (i = 0; i < n; i++)
+                if (routes.get(i).getMaTuyen().equals(value)) {
+                    break;
+                }
+        }
+        return i + 1;
+    }
+
+    @Override
+    public int itemSelectGroup(int value) {
+        n = saleGroups.size();
+        if (n > 0) {
+            for (i = 0; i < n; i++)
+                if (saleGroups.get(i).getMaNhom() == value) {
+                    break;
+                }
+        }
+        return i + 1;
+    }
+
+    @Override
+    public void putData(Order order) {
+        if (order.getMaPhieuBan() == null) {
+            addOrderView.onError("Order ID is not null");
+        } else if (order.getMaKH() == null) {
+            addOrderView.onError("Customer is not null");
+        } else {
+            Map<String, Object> postData = order.toMap();
+            mDatabase.getReference("PhieuBanHang").updateChildren(postData)
+                    .addOnSuccessListener(aVoid -> addOrderView.onSuccess())
+                    .addOnFailureListener(e -> addOrderView.onError(e.getMessage()));
+        }
     }
 }

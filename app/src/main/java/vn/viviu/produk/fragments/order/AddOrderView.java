@@ -15,4 +15,8 @@ public interface AddOrderView {
     void setCustomerDialog(List<Customer> customers);
 
     void setNccDialog(List<Provider> providers);
+
+    void onError(String msg);
+
+    void onSuccess();
 }

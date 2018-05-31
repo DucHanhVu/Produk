@@ -25,13 +25,13 @@ import vn.viviu.produk.models.Industry;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductManagerFragment extends Fragment {
+public class ProductFragment extends Fragment {
     private RecyclerView listIndustry;
     private IndustryAdapter industryAdapter;
     private DatabaseReference dataRef;
     private ArrayList<Industry> industries;
 
-    public ProductManagerFragment() {
+    public ProductFragment() {
         // Required empty public constructor
     }
 

@@ -51,7 +51,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
 
     private List<Order> orderList;
 
-    private final static String TAG = "Order Fragment";
+//    private final static String TAG = "Order Fragment";
 
     public OrdersFragment() {
         // Required empty public constructor
@@ -115,7 +115,6 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         if (v.getId() == R.id.fab){
             listener.onFragmentChanged(new AddOrderFragment(), Key.KEY_ADD_ORDER, true);
         }
-
     }
 
     @Override
@@ -133,7 +132,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         Order order = orderList.get(position);
         OrderDetailFragment orderDetailFragment = new OrderDetailFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Key.KEY_ORDER_DETAIL, order);
+        bundle.putString(Key.KEY_ORDER_DETAIL, order.getMaPhieuBan());
         orderDetailFragment.setArguments(bundle);
         listener.onFragmentChanged(orderDetailFragment, Key.KEY_ORDER_DETAIL, true);
     };

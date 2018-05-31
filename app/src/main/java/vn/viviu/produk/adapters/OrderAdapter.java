@@ -75,7 +75,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderHolder>
             case 0:
                 text = "Chờ Duyệt";
                 res = R.drawable.bkg_orange;
-                color = R.color.deep_orange;
+                color = R.color.colorAccent;
                 break;
             case 1:
                 text = "Đã Xác Nhận";

@@ -73,5 +73,7 @@
     <string name="provider">Provider</string>
     <string name="dialog">Dialog</string>
     <string name="choose_ncc">Choose a provider…</string>
+    <string name="edit_order">Edit Order</string>
+    <string name="title_order_detail">Order Detail</string>
 
 </resources>

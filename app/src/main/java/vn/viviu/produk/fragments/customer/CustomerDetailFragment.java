@@ -35,8 +35,7 @@ public class CustomerDetailFragment extends BaseFragment {
     ImageView bannerCustomerDetail;
     @BindView(R.id.avatar_customer_detail)
     CircleImageView avatarCustomerDetail;
-    @BindView(R.id.tv_id_customer_detail)
-    TextView tvIdCustomerDetail;
+
     @BindView(R.id.tv_name_customer_detail)
     TextView tvNameCustomerDetail;
     @BindView(R.id.tv_nglh_customer_detail)
@@ -62,6 +61,11 @@ public class CustomerDetailFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        storageUtil = new StorageUtil();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -69,7 +73,6 @@ public class CustomerDetailFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_customer_detail, container, false);
         unbinder = ButterKnife.bind(this, view);
-        storageUtil = new StorageUtil();
         return view;
     }
 
@@ -80,7 +83,6 @@ public class CustomerDetailFragment extends BaseFragment {
         hideFab();
         if (getArguments() != null) {
             Customer customer = (Customer) getArguments().getSerializable(Key.KEY_CUSTOMER_DETAIL);
-
             //Load Image
             storageRef = storageUtil.getImage(customer.getHinhAnh(), StorageUtil.TYPE_AVATAR);
             storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -89,11 +91,10 @@ public class CustomerDetailFragment extends BaseFragment {
             }).addOnFailureListener(e -> Log.e(TAG, e.getMessage()));
 
             String text;
-            text = "Mã Khách Hàng: " + customer.getMaKH();
-            tvIdCustomerDetail.setText(text);
-            text = "Tên khách hàng: " + customer.getTenKH();
+            text = customer.getTenKH();
+            setTitle(text);
             tvNameCustomerDetail.setText(text);
-            text = "Người liên hệ: " + customer.getNguoiLienHe();
+            text = customer.getNguoiLienHe();
             tvNglhCustomerDetail.setText(text);
             text = "Địa chỉ: " + customer.getDiaChi();
             tvAddressCustomerDetail.setText(text);
