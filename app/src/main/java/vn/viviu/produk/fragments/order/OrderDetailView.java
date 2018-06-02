@@ -5,6 +5,7 @@ import java.util.List;
 import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
+import vn.viviu.produk.models.Provider;
 
 public interface OrderDetailView {
     void setOrder(Order order);
@@ -12,4 +13,6 @@ public interface OrderDetailView {
     void setList(List<ChiTietBan> chiTietBans);
 
     void setCustomer(Customer customer);
+
+    void setNCC(Provider provider);
 }

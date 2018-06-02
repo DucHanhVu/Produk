@@ -122,7 +122,7 @@ public class Order implements Serializable {
         post.put("NgayGiao", NgayGiao);
         post.put("MaNhom", MaNhom);
         post.put("NguoiDat", NguoiDat);
-        post.put("NguoiGiao", NguoiBan);
+        post.put("NguoiBan", NguoiBan);
         post.put("MaTuyen", MaTuyen);
         post.put("MaKH", MaKH);
         post.put("TongTien", TongTien);

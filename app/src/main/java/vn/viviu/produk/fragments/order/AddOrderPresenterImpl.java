@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
 import vn.viviu.produk.models.Provider;
@@ -21,6 +22,7 @@ public class AddOrderPresenterImpl implements AddOrderPresenter {
     private AddOrderView addOrderView;
     private FirebaseDatabase mDatabase;
 
+    private List<ChiTietBan> chiTietBans;
     private List<Stream> routes;
     private List<SaleGroup> saleGroups;
     private List<Customer> customers;
@@ -36,7 +38,28 @@ public class AddOrderPresenterImpl implements AddOrderPresenter {
     }
 
     @Override
-    public void getData() {
+    public void getOrderDetail(String orderId) {
+        mDatabase.getReference("ChiTietBan").orderByChild("MaPhieuBan").equalTo(orderId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        chiTietBans = new ArrayList<>();
+                        for (DataSnapshot post : dataSnapshot.getChildren()) {
+                            ChiTietBan ctb = post.getValue(ChiTietBan.class);
+                            chiTietBans.add(ctb);
+                        }
+                        addOrderView.setOrderDetail(chiTietBans);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+    }
+
+    @Override
+    public void getDataSpin() {
         routes = new ArrayList<>();
         saleGroups = new ArrayList<>();
 
@@ -63,6 +86,22 @@ public class AddOrderPresenterImpl implements AddOrderPresenter {
                     routes.add(post.getValue(Stream.class));
                 }
                 addOrderView.setRouteSpin(routes);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    @Override
+    public void getOrderCount() {
+        mDatabase.getReference("PhieuBanHang").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long count = dataSnapshot.getChildrenCount();
+                addOrderView.setCount(count);
             }
 
             @Override

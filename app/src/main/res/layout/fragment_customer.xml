@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".fragments.customer.CustomerFragment">
 
-    <include layout="@layout/search" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_customer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
+        android:paddingTop="?actionBarSize"
         tools:listitem="@layout/item_customer" />
+
+    <include layout="@layout/search" />
+
 </RelativeLayout>

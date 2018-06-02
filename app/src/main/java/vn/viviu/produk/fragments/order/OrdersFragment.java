@@ -81,11 +81,8 @@ public class OrdersFragment extends BaseFragment implements OrderView,
         orderList = new ArrayList<>(0);
         adapter = new OrderAdapter(getContext(), orderList, passDataListener);
         rvOrders.setAdapter(adapter);
-        rvOrders.setLayoutManager(new LinearLayoutManager(
-                getContext(),
-                LinearLayoutManager.VERTICAL,
+        rvOrders.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                 false));
-
         return view;
     }
 
@@ -112,7 +109,7 @@ public class OrdersFragment extends BaseFragment implements OrderView,
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab){
+        if (v.getId() == R.id.fab) {
             listener.onFragmentChanged(new AddOrderFragment(), Key.KEY_ADD_ORDER, true);
         }
     }

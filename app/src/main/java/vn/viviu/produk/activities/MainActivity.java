@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         //Mapping
         nav = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);

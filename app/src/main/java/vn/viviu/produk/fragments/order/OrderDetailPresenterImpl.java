@@ -13,6 +13,7 @@ import java.util.List;
 import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
+import vn.viviu.produk.models.Provider;
 
 public class OrderDetailPresenterImpl implements OrderDetailPresenter {
     private OrderDetailView detailView;
@@ -33,6 +34,7 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
                 Order order = dataSnapshot.getValue(Order.class);
                 detailView.setOrder(order);
                 getCustomer(order.getMaKH());
+                getNCC(order.getNguoiBan());
             }
 
             @Override
@@ -67,6 +69,23 @@ public class OrderDetailPresenterImpl implements OrderDetailPresenter {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Customer c = dataSnapshot.getValue(Customer.class);
                         detailView.setCustomer(c);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+    }
+
+    private void getNCC(String nccId) {
+        mDatabase.getReference("Provider").child(nccId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Provider provider = dataSnapshot.getValue(Provider.class);
+                        if (provider != null)
+                            detailView.setNCC(provider);
                     }
 
                     @Override

@@ -1,191 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/space_padding"
-    app:cardCornerRadius="@dimen/space_padding"
-    app:cardElevation="@dimen/space_padding"
+    android:background="@color/light_gray"
     tools:context=".fragments.order.AddOrderFragment">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_alignParentTop="true"
+        android:fillViewport="true"
+        android:paddingBottom="?actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/tv_order_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/bkg_title"
-            android:gravity="center"
-            android:text="@string/title_orders"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/padding_16"
-                android:paddingTop="@dimen/space_padding">
-
-                <ImageButton
-                    android:id="@+id/ngban_img_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_person"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edt_order_ngdat" />
-
-                <TextView
-                    android:id="@+id/tv_order_id"
-                    style="@style/TextEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Mã Đơn Hàng"
-                    android:textAlignment="textEnd"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_id"
-                    app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/space_padding"
+                android:background="@drawable/bkg_white"
+                android:padding="@dimen/space_padding">
 
                 <TextView
                     android:id="@+id/tv_order_ngdat"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Người Đặt"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_ngdat"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_order_id"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
 
                 <TextView
                     android:id="@+id/tv_order_customer"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Khách Hàng"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_customer"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_order_id"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
 
                 <TextView
                     android:id="@+id/tv_order_customer_name"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Tên Khách Hàng"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_customer_name"
-                    app:layout_constraintEnd_toEndOf="@+id/barrier4"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_order_ngban"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Người Bán"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_ngban"
-                    app:layout_constraintEnd_toEndOf="@+id/barrier4"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
 
                 <TextView
                     android:id="@+id/tv_order_ngay_dat"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Ngày Đặt"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_ngay_dat"
-                    app:layout_constraintEnd_toEndOf="@+id/tv_order_id"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
 
                 <TextView
                     android:id="@+id/tv_order_ngay_giao"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:text="Ngày Giao"
                     android:textAlignment="textEnd"
                     app:layout_constraintBaseline_toBaselineOf="@+id/edt_ngay_giao"
-                    app:layout_constraintEnd_toEndOf="@+id/barrier4"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
 
                 <TextView
                     android:id="@+id/tv_order_tuyen"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:text="Mã Tuyến"
                     android:textAlignment="textEnd"
-                    app:layout_constraintEnd_toEndOf="@+id/barrier4"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name"
                     app:layout_constraintTop_toBottomOf="@+id/edt_ngay_giao" />
 
                 <TextView
                     android:id="@+id/tv_order_nhom"
-                    style="@style/TextEdit"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:text="Mã Nhóm"
                     android:textAlignment="textEnd"
-                    app:layout_constraintEnd_toEndOf="@+id/barrier4"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name"
                     app:layout_constraintTop_toBottomOf="@+id/spin_order_tuyen" />
-
-                <android.support.constraint.Barrier
-                    android:id="@+id/barrier4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:barrierDirection="end"
-                    app:constraint_referenced_ids="tv_order_ngay_dat,tv_order_customer,tv_order_id,tv_order_nhom,tv_order_tuyen,tv_order_ngban,tv_order_ngdat,tv_order_ngay_giao,tv_order_customer_name" />
-
-                <EditText
-                    android:id="@+id/edt_order_id"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:ems="10"
-                    android:hint="Mã đơn hàng"
-                    android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/barrier4"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/edt_order_customer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
                     android:ems="10"
                     android:hint="Mã khách hàng"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toStartOf="@+id/customer_img_btn"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
-                    app:layout_constraintTop_toBottomOf="@+id/edt_order_id" />
+                    app:layout_constraintStart_toEndOf="@+id/barrier4"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/edt_order_customer_name"
@@ -197,7 +126,7 @@
                     android:hint="Tên khách hàng"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_order_customer" />
 
                 <EditText
@@ -210,7 +139,7 @@
                     android:hint="Người đặt"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_order_customer_name" />
 
                 <EditText
@@ -223,7 +152,7 @@
                     android:hint="Người bán"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toStartOf="@+id/ngban_img_btn"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_order_ngdat" />
 
                 <EditText
@@ -236,7 +165,7 @@
                     android:hint="Ngày đặt"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toStartOf="@+id/ngdat_img_btn"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_order_ngban" />
 
                 <EditText
@@ -249,7 +178,7 @@
                     android:hint="Ngày Giao"
                     android:inputType="textPersonName"
                     app:layout_constraintEnd_toStartOf="@+id/nggiao_img_btn"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_ngay_dat" />
 
                 <Spinner
@@ -259,7 +188,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/edt_ngay_giao" />
 
                 <Spinner
@@ -269,8 +198,17 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/edt_order_id"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
                     app:layout_constraintTop_toBottomOf="@+id/spin_order_tuyen" />
+
+                <ImageButton
+                    android:id="@+id/ngban_img_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_person"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/edt_order_ngdat" />
 
                 <ImageButton
                     android:id="@+id/ngdat_img_btn"
@@ -292,13 +230,65 @@
                     android:id="@+id/customer_img_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/ic_person_black_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edt_order_id" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tv_order_payed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiền khách trả"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_payed"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_order_customer_name" />
+
+                <EditText
+                    android:id="@+id/edt_order_payed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:hint="Tiền khách trả"
+                    android:inputType="number"
+                    app:layout_constraintEnd_toStartOf="@+id/textView"
+                    app:layout_constraintStart_toStartOf="@+id/edt_order_customer"
+                    app:layout_constraintTop_toBottomOf="@+id/spin_order_nhom" />
+
+                <android.support.constraint.Barrier
+                    android:id="@+id/barrier4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierDirection="end"
+                    app:constraint_referenced_ids="tv_order_ngay_giao,tv_order_nhom,tv_order_ngdat,tv_order_tuyen,tv_order_customer,tv_order_ngay_dat,tv_order_customer_name,tv_order_ngban,tv_order_payed" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VNĐ"
+                    android:textSize="18sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/edt_order_payed"
+                    app:layout_constraintEnd_toEndOf="parent" />
             </android.support.constraint.ConstraintLayout>
-        </ScrollView>
 
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_add_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_padding"
+                android:layout_marginStart="@dimen/space_padding"
+                tools:listitem="@layout/item_add_product" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/add_product_order_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bkg_btn"
+        android:text="@string/add_product"
+        android:textColor="@color/white" />
+</RelativeLayout>

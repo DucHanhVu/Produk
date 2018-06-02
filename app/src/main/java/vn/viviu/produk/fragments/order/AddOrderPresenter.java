@@ -4,7 +4,11 @@ package vn.viviu.produk.fragments.order;
 import vn.viviu.produk.models.Order;
 
 public interface AddOrderPresenter {
-    void getData();
+    void getOrderDetail(String orderId);
+
+    void getDataSpin();
+
+    void getOrderCount();
 
     void getCustomer();
 

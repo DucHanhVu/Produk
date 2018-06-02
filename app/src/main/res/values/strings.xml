@@ -75,5 +75,10 @@
     <string name="choose_ncc">Choose a provider…</string>
     <string name="edit_order">Edit Order</string>
     <string name="title_order_detail">Order Detail</string>
+    <string name="start_check_in">Start Check in</string>
+    <string name="get_directions">Get Directions</string>
+    <string name="title_filter">Filter</string>
+    <string name="choose_product">Choose a product</string>
+    <string name="choose_industry">Choose a industry…</string>
 
 </resources>

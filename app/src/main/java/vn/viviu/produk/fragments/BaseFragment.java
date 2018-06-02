@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import vn.viviu.produk.R;
 import vn.viviu.produk.activities.MainActivity;
@@ -23,6 +24,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected ActionBarDrawerToggle toggle;
     protected DrawerLayout drawer;
     protected boolean mToolBarNavigationListenerIsRegistered = false;
+    protected TextView titleBar;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         actionBar = ((MainActivity) getActivity()).getSupportActionBar();
         drawer = ((MainActivity) getActivity()).findViewById(R.id.drawer_layout);
         toggle = ((MainActivity) getActivity()).getToggle();
+        titleBar = ((MainActivity) getActivity()).findViewById(R.id.tv_title_app_bar);
     }
 
     // hide FAB button
@@ -90,11 +93,11 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      * Simplify setTitle in child fragments
      */
     protected void setTitle(int resId) {
-        getActivity().setTitle(getResources().getString(resId));
+        setTitle(getResources().getString(resId));
     }
 
     protected void setTitle(CharSequence title) {
-        getActivity().setTitle(title);
+        titleBar.setText(title);
     }
 
     @Override

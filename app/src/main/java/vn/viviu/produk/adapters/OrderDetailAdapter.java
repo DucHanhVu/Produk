@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -121,14 +120,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         TextView tvDiscountDetail;
         @BindView(R.id.tv_total_money_detail)
         TextView tvTotalMoneyDetail;
-        @BindView(R.id.del_product_order_btn)
-        ImageButton delBtn;
 
         OrderDetailHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-            delBtn.setOnClickListener(this);
         }
 
         @Override

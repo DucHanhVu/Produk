@@ -2,12 +2,16 @@ package vn.viviu.produk.fragments.order;
 
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,20 +34,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import vn.viviu.produk.R;
+import vn.viviu.produk.adapters.AddProductAdapter;
+import vn.viviu.produk.callbacks.OnFragmentChangedListener;
 import vn.viviu.produk.fragments.BaseFragment;
+import vn.viviu.produk.fragments.product.ProductFragment;
+import vn.viviu.produk.models.ChiTietBan;
 import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.Order;
 import vn.viviu.produk.models.Provider;
 import vn.viviu.produk.models.SaleGroup;
 import vn.viviu.produk.models.Stream;
 import vn.viviu.produk.utils.Key;
+import vn.viviu.produk.utils.StringUtil;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddOrderFragment extends BaseFragment implements AddOrderView {
-    @BindView(R.id.edt_order_id)
-    EditText edtOrderId;
     @BindView(R.id.edt_order_customer)
     EditText edtOrderCustomer;
     @BindView(R.id.edt_order_ngdat)
@@ -69,23 +76,38 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     Unbinder unbinder;
     @BindView(R.id.edt_order_customer_name)
     EditText edtOrderCustomerName;
+    @BindView(R.id.edt_order_payed)
+    EditText edtOrderPayed;
+    @BindView(R.id.rv_add_order)
+    RecyclerView rvAddOrder;
 
     private AlertDialog.Builder mBuilder;
     private Spinner spinDialog;
+    private Calendar calendar;
 
     /**
      * Tool Util
      */
-    private Calendar calendar;
+    private OnFragmentChangedListener listener;
     private AddOrderPresenter addOrderPre;
     private Order order;
-
-    private List<SaleGroup> saleGroups;
-    private List<Stream> routes;
+    private List<ChiTietBan> chiTietBans;
+    private AddProductAdapter addProductAdapter;
     private ArrayAdapter<String> spinAdapter;
+
+    private static final String TAG = "Add_Order";
 
     public AddOrderFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentChangedListener)
+            listener = (OnFragmentChangedListener) context;
+        else
+            throw new RuntimeException(context.toString() + "must implement OnFragmentChangedListener");
     }
 
     @Override
@@ -102,7 +124,13 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_order, container, false);
         unbinder = ButterKnife.bind(this, view);
-        addOrderPre.getData();
+        chiTietBans = new ArrayList<>(0);
+        addProductAdapter = new AddProductAdapter(getContext(), chiTietBans);
+        rvAddOrder.setAdapter(addProductAdapter);
+        rvAddOrder.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
+
+        addOrderPre.getDataSpin();
         return view;
     }
 
@@ -113,27 +141,30 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
         showBackButton(true);
         if (getArguments() != null) {
             order = (Order) getArguments().getSerializable(Key.KEY_ORDER);
-            edtOrderId.setText(order.getMaPhieuBan());
-            edtOrderId.setEnabled(false);
+            addOrderPre.getOrderDetail(order.getMaPhieuBan());
             edtOrderCustomer.setText(order.getMaKH());
             edtNgayDat.setText(order.getNgayDat());
             edtNgayGiao.setText(order.getNgayGiao());
             edtOrderNgban.setText(order.getNguoiBan());
             edtOrderNgdat.setText(order.getNguoiDat());
-            edtOrderId.setEnabled(false);
+            edtOrderPayed.setText(order.getThanhToanTruoc() + "");
 
             String customerName = getArguments().getString(Key.KEY_CUSTOMER);
             edtOrderCustomerName.setText(customerName);
-        } else
+        } else {
+            Log.d(TAG, "Call");
             order = new Order();
+            addOrderPre.getOrderCount();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (getArguments() != null)
-            setTitle(R.string.edit_order);
-        else
+        if (getArguments() != null) {
+            String total = "Tổng tiền: " + StringUtil.formatCurrency(order.getTongTien());
+            setTitle(total);
+        } else
             setTitle(R.string.add_order);
     }
 
@@ -143,7 +174,7 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.customer_img_btn, R.id.ngban_img_btn, R.id.ngdat_img_btn, R.id.nggiao_img_btn})
+    @OnClick({R.id.customer_img_btn, R.id.ngban_img_btn, R.id.ngdat_img_btn, R.id.nggiao_img_btn, R.id.add_product_order_btn})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -159,6 +190,8 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
             case R.id.ngban_img_btn:
                 showSpinnerDialog(ngbanImgBtn);
                 break;
+            case R.id.add_product_order_btn:
+                listener.onFragmentChanged(new ProductFragment(), Key.KEY_PRODUCT, true);
         }
     }
 
@@ -197,8 +230,24 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     }
 
     @Override
+    public void setOrderDetail(List<ChiTietBan> chiTietBans) {
+        this.chiTietBans = chiTietBans;
+        addProductAdapter.update(chiTietBans);
+    }
+
+    @Override
+    public void setCount(long count) {
+        Log.d(TAG, count + "");
+        String idOrder;
+        if (count < 10)
+            idOrder = "PB0" + (count + 1);
+        else
+            idOrder = "PB" + (count + 1);
+        order.setMaPhieuBan(idOrder);
+    }
+
+    @Override
     public void setRouteSpin(List<Stream> routes) {
-        this.routes = routes;
         List<String> listRoutes = new ArrayList<>();
         listRoutes.add(getString(R.string.choose_route));
         for (Stream r : routes) {
@@ -228,7 +277,6 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
 
     @Override
     public void setGroupSpin(List<SaleGroup> saleGroups) {
-        this.saleGroups = saleGroups;
         List<String> listSales = new ArrayList<>();
         listSales.add(getString(R.string.choose_sales));
         for (SaleGroup s : saleGroups) {
@@ -355,7 +403,6 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     }
 
     private void saveData() {
-        order.setMaPhieuBan(edtOrderId.getText().toString());
         order.setMaKH(edtOrderCustomer.getText().toString());
         order.setNguoiDat(edtOrderNgdat.getText().toString());
         order.setNguoiBan(edtOrderNgban.getText().toString());
