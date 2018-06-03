@@ -80,5 +80,6 @@
     <string name="title_filter">Filter</string>
     <string name="choose_product">Choose a product</string>
     <string name="choose_industry">Choose a industry…</string>
+    <string name="title_detail">Detail</string>
 
 </resources>

@@ -67,4 +67,9 @@ public class ProductPresenterImpl implements ProductPresenter {
             }
         });
     }
+
+    @Override
+    public void getCount() {
+
+    }
 }

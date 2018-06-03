@@ -35,6 +35,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:15.0.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.arimorty:floatingsearchview:2.1.1'
+    implementation 'com.github.vipulasri:timelineview:1.0.6'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

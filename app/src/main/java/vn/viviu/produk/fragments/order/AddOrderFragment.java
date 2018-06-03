@@ -1,8 +1,10 @@
 package vn.viviu.produk.fragments.order;
 
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -81,19 +83,39 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
     @BindView(R.id.rv_add_order)
     RecyclerView rvAddOrder;
 
+    /**
+     * Dialog for spinner {@link AlertDialog.Builder}.
+     */
     private AlertDialog.Builder mBuilder;
+
     private Spinner spinDialog;
     private Calendar calendar;
 
     /**
-     * Tool Util
+     * Replace fragment {@link OnFragmentChangedListener}.
      */
     private OnFragmentChangedListener listener;
+
+    /**
+     * Presenter {@link AddOrderPresenter}.
+     */
     private AddOrderPresenter addOrderPre;
-    private Order order;
+
+    /**
+     * {@link List}.
+     */
     private List<ChiTietBan> chiTietBans;
+
+    /**
+     * Adapter for RecyclerView {@link AddProductAdapter}
+     */
     private AddProductAdapter addProductAdapter;
+
+    /**
+     * ArrayAdapter for Spinner {@link ArrayAdapter<String>}.
+     */
     private ArrayAdapter<String> spinAdapter;
+    private Order order;
 
     private static final String TAG = "Add_Order";
 
@@ -147,7 +169,7 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
             edtNgayGiao.setText(order.getNgayGiao());
             edtOrderNgban.setText(order.getNguoiBan());
             edtOrderNgdat.setText(order.getNguoiDat());
-            edtOrderPayed.setText(order.getThanhToanTruoc() + "");
+            edtOrderPayed.setText(StringUtil.toString(order.getThanhToanTruoc()));
 
             String customerName = getArguments().getString(Key.KEY_CUSTOMER);
             edtOrderCustomerName.setText(customerName);
@@ -191,42 +213,24 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
                 showSpinnerDialog(ngbanImgBtn);
                 break;
             case R.id.add_product_order_btn:
-                listener.onFragmentChanged(new ProductFragment(), Key.KEY_PRODUCT, true);
+                ProductFragment fragment = new ProductFragment();
+                fragment.setTargetFragment(AddOrderFragment.this, Key.KEY_PRODUCT_CODE);
+                Bundle bundleProduct = new Bundle();
+                bundleProduct.putString(Key.KEY_ORDER, order.getMaPhieuBan());
+                fragment.setArguments(bundleProduct);
+                listener.onFragmentChanged(fragment, Key.KEY_PRODUCT, true);
         }
-    }
-
-    private void showDatePickerDialog(EditText view) {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog.OnDateSetListener dateSetListener = (v, y, m, d) -> {
-            String date = d + "/" + (m + 1) + "/" + y;
-            view.setText(date);
-        };
-        DatePickerDialog datePickerDialog =
-                new DatePickerDialog(getContext(), dateSetListener, year, month, day);
-        datePickerDialog.setTitle(R.string.choose_date);
-        datePickerDialog.show();
-    }
-
-    private void showSpinnerDialog(View v) {
-        mBuilder = new AlertDialog.Builder(getContext());
-        View view = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-        spinDialog = view.findViewById(R.id.spin_dialog);
-        if (v == customerImgBtn)
-            addOrderPre.getCustomer();
-        else if (v == ngbanImgBtn)
-            addOrderPre.getNCC();
-        mBuilder.setTitle(R.string.dialog);
-        mBuilder.setView(view);
-        mBuilder.setPositiveButton(R.string.ok, (dialog, which) -> dialog.cancel());
-        mBuilder.create().show();
     }
 
     @Override
     public void onBackPressed() {
         getActivity().getSupportFragmentManager()
                 .popBackStackImmediate(Key.KEY_ADD_ORDER, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -400,6 +404,35 @@ public class AddOrderFragment extends BaseFragment implements AddOrderView {
             saveData();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDatePickerDialog(EditText view) {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog.OnDateSetListener dateSetListener = (v, y, m, d) -> {
+            String date = d + "/" + (m + 1) + "/" + y;
+            view.setText(date);
+        };
+        DatePickerDialog datePickerDialog =
+                new DatePickerDialog(getContext(), dateSetListener, year, month, day);
+        datePickerDialog.setTitle(R.string.choose_date);
+        datePickerDialog.show();
+    }
+
+    @SuppressLint("InflateParams")
+    private void showSpinnerDialog(View v) {
+        mBuilder = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+        spinDialog = view.findViewById(R.id.spin_dialog);
+        if (v == customerImgBtn)
+            addOrderPre.getCustomer();
+        else if (v == ngbanImgBtn)
+            addOrderPre.getNCC();
+        mBuilder.setTitle(R.string.dialog);
+        mBuilder.setView(view);
+        mBuilder.setPositiveButton(R.string.ok, (dialog, which) -> dialog.cancel());
+        mBuilder.create().show();
     }
 
     private void saveData() {

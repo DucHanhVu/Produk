@@ -9,4 +9,6 @@ public interface ProductView {
     void setProductList(List<Product> products);
 
     void setIndustries(List<Industry> industries);
+
+    void setCount(long count);
 }

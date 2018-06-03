@@ -41,6 +41,7 @@ import vn.viviu.produk.models.Customer;
 import vn.viviu.produk.models.CustomerGroup;
 import vn.viviu.produk.models.Stream;
 import vn.viviu.produk.utils.Key;
+import vn.viviu.produk.utils.StringUtil;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,9 +49,6 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class AddCustomerFragment extends BaseFragment implements AddCustomerView {
-    /**
-     * View
-     */
     @BindView(R.id.edt_customer_id)
     TextInputEditText edtCustomerId;
     @BindView(R.id.edt_customer_name)
@@ -81,24 +79,77 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
     @BindView(R.id.add_avatar)
     ImageView addAvatar;
 
+    /**
+     * Notification {@link NotificationCompat.Builder}
+     * {@link NotificationCompat}.
+     */
     private NotificationCompat.Builder mBuilder;
+
+    /**
+     * Notify Manager {@link NotificationManager}.
+     */
     private NotificationManager mNotifyManager;
+
+    /**
+     * Listener {@link AddCustomerPre} for logic.
+     */
     private AddCustomerPre addCustomerPreListener;
+
+    /**
+     * Replace Fragment in Activity {@link OnFragmentChangedListener}.
+     */
     private OnFragmentChangedListener fragmentChangedListener;
+
+    /**
+     * {@link Customer}.
+     */
     private Customer customer;
 
     /**
-     * List
+     * {@link List}
      */
     private List<Area> areas;
     private List<CustomerGroup> groups;
     private List<Stream> routes;
+
+    /**
+     * {@link ArrayAdapter<String>}.
+     */
     private ArrayAdapter<String> spinAdapter;
 
     private String pathImg;
     private String imgName;
     private static final String TAG = "Add_Customer_Fragment";
     private static final String channelId = "Notify_Add_Customer";
+
+    /**
+     * Adapter for Spinner {@link AdapterView.OnItemSelectedListener}
+     */
+    AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch (view.getId()) {
+                case R.id.spin_customer_type: {
+                    customer.setMaLoaiKH(groups.get(position).getMaLoaiKH());
+                    break;
+                }
+                case R.id.spin_customer_area: {
+                    customer.setMaKV(areas.get(position).getMaKV());
+                    break;
+                }
+                case R.id.spin_customer_route: {
+                    customer.setMaTuyen(routes.get(position).getMaTuyen());
+                    break;
+                }
+            }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     public AddCustomerFragment() {
         // Required empty public constructor
@@ -282,11 +333,13 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         edtCustomerAddress.setText(customer.getDiaChi());
         edtCustomerContact.setText(customer.getNguoiLienHe());
         edtCustomerPosition.setText(customer.getChucVu());
-        edtCustomerPhone.setText("0" + customer.getSDT());
+
+        String phone = "0" + customer.getSDT();
+        edtCustomerPhone.setText(phone);
         edtCustomerEmail.setText(customer.getEmail());
         edtCustomerWebsite.setText(customer.getWebsite());
         edtCustomerNote.setText(customer.getGhiChu());
-        edtDebtLimit.setText(customer.getHanMucCN() + "");
+        edtDebtLimit.setText(StringUtil.toString(customer.getHanMucCN()));
     }
 
     /**
@@ -320,31 +373,6 @@ public class AddCustomerFragment extends BaseFragment implements AddCustomerView
         addCustomerPreListener.putData(customer);
     }
 
-    AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            switch (view.getId()) {
-                case R.id.spin_customer_type: {
-                    customer.setMaLoaiKH(groups.get(position).getMaLoaiKH());
-                    break;
-                }
-                case R.id.spin_customer_area: {
-                    customer.setMaKV(areas.get(position).getMaKV());
-                    break;
-                }
-                case R.id.spin_customer_route: {
-                    customer.setMaTuyen(routes.get(position).getMaTuyen());
-                    break;
-                }
-            }
-
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    };
 
     @Override
     public void onClick(View v) {

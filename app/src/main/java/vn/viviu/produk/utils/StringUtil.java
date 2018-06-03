@@ -12,4 +12,8 @@ public class StringUtil {
         DecimalFormat format = new DecimalFormat("#,###,###");
         return format.format(money) + " VNĐ";
     }
+
+    public static String toString(int number) {
+        return number + "";
+    }
 }
