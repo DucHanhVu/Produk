@@ -12,11 +12,10 @@ import android.widget.GridView;
 import vn.viviu.produk.R;
 import vn.viviu.produk.adapters.HomeMenuAdapter;
 import vn.viviu.produk.callbacks.OnFragmentChangedListener;
-import vn.viviu.produk.fragments.BaseFragment;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
 import vn.viviu.produk.fragments.order.OrdersFragment;
-import vn.viviu.produk.fragments.statistical.StatisticFragment;
+import vn.viviu.produk.fragments.statistical.AnalyticsFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
 import vn.viviu.produk.utils.Key;
 
@@ -100,7 +99,7 @@ public class HomeFragment extends BaseFragment {
                 break;
             }
             case 4: {
-                listener.onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC, false);
+                listener.onFragmentChanged(new AnalyticsFragment(), Key.KEY_STATISTIC, false);
                 listener.onItemChanged(R.id.nav_statistical);
                 break;
             }

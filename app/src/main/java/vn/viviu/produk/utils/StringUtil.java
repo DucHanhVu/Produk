@@ -16,4 +16,9 @@ public class StringUtil {
     public static String toString(int number) {
         return number + "";
     }
+
+    public static int convertDate(String date) {
+        String[] a = date.trim().split("/");
+        return Integer.parseInt(a[1]);
+    }
 }

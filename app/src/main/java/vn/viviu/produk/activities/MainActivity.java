@@ -38,7 +38,7 @@ import vn.viviu.produk.fragments.HomeFragment;
 import vn.viviu.produk.fragments.check_in.CheckInFragment;
 import vn.viviu.produk.fragments.customer.CustomerFragment;
 import vn.viviu.produk.fragments.order.OrdersFragment;
-import vn.viviu.produk.fragments.statistical.StatisticFragment;
+import vn.viviu.produk.fragments.statistical.AnalyticsFragment;
 import vn.viviu.produk.fragments.work.WorkFragment;
 import vn.viviu.produk.models.User;
 import vn.viviu.produk.utils.Key;
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity
                 onFragmentChanged(new WorkFragment(), Key.KEY_WORK, false);
                 break;
             case R.id.nav_statistical:
-                onFragmentChanged(new StatisticFragment(), Key.KEY_STATISTIC, false);
+                onFragmentChanged(new AnalyticsFragment(), Key.KEY_STATISTIC, false);
                 break;
             case R.id.nav_logout: {
                 mAuth.signOut();
